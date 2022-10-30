@@ -1,0 +1,106 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+*{
+    margin: 0px;
+    padding: 0px;
+}
+div#containerForm {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    padding: 20px 40px 30px 40px;
+    width: 400px;
+    margin: 10px auto;
+}
+    div#containerForm h3{
+       text-align: center;
+       font-size: 35px;
+       margin-bottom: 30px; 
+    }
+    div#containerForm input[type=text], select{
+        width: 250px;
+        padding: 12px 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    div#containerForm input, select, label{
+        display: block;
+    }
+    div#containerForm select#score{
+        width: 60px;
+    }
+    div#containerForm input[type=submit] {
+        width: 70px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 10px;
+        margin: 8px 0px 0px 330px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    div#containerForm input[type=submit]:hover {
+        background-color: #45a049;
+    }
+    div#containerForm textarea {
+        width: 100%;
+        height: 150px;
+        padding: 12px 15px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+        margin-top: 5px;
+    }
+/* ========================================== */
+div#container {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    padding: 20px 40px 30px 40px;
+    width: 350px;
+    margin: 10px auto;
+}
+    div#container h3{
+       text-align: center;
+       font-size: 35px; 
+    }
+    div#container div#labels{
+        display: inline-block;
+        width: 180px;
+        margin-top: 10px;
+    }
+    div#container div#labels label{
+        margin: 20px 0px 20px 0px;
+        display: block;
+    }
+    div#container div#results{
+        display: inline-block;
+        width: 150px;
+    }
+    div#container div#results span{
+        margin: 20px 0px 20px 0px;
+        display: block;
+    }
+    div#container div#reasons p{
+        margin: 15px 0px 40px 0px;
+    }
+    div#container a{
+        width: 70px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 10px;
+        margin: 10px 0px 0px 0px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    div#container a:hover {
+        background-color: #45a049;
+    }
