@@ -7,7 +7,7 @@
     <title>Staff 3 Dashboard.</title>
 </head>
 <body>
-    <h1><?=$name?> Dashboard</h1>
+    <h1>Staff 3 Dashboard</h1>
     <a href='<?=base_url();?>logout'>Log off</a></h3>
 </body>
 </html>

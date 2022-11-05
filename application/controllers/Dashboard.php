@@ -13,16 +13,15 @@ class Dashboard extends CI_Controller {
     /* This function redirect user to the dashboard. */  
 	public function index()
 	{   
-        $user_level = $this->session->userdata('user_level');
-        $name = $this->session->userdata('firstname');	
+        $user_level = $this->session->userdata('user_level');	
         if($user_level === "1"){ // This is for Staff 1
-            $this->load->view('dashboards/staff1_dashboard', array('name' => $name));
+            $this->load->view('dashboards/staff1_dashboard');
         }elseif ($user_level === "2") { // This is for Staff 2
-            $this->load->view('dashboards/staff2_dashboard', array('name' => $name));
+            $this->load->view('dashboards/staff2_dashboard');
         }elseif ($user_level === "3") { // This is for Staff 3
-            $this->load->view('dashboards/staff3_dashboard', array('name' => $name));
+            $this->load->view('dashboards/staff3_dashboard');
         }elseif ($user_level === "4") { // This is for Head
-            $this->load->view('dashboards/head_assessors_dashboard', array('name' => $name));
+            $this->load->view('dashboards/head_assessors_dashboard');
         }      		
 	}
 

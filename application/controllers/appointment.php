@@ -37,7 +37,7 @@ class Appointment extends CI_Controller {
             
             if($result == "success") 
             {
-                $this->session->set_userdata(array('user_id'=>$user['id'], 'firstname'=>$user['firstname'], 'user_level'=>$user['user_level']));
+                $this->session->set_userdata(array('user_id'=>$user['id'], 'user_level'=>$user['user_level']));
                 redirect("dashboard"); 
             }
             else 

@@ -29,7 +29,7 @@
     });
 </script>
 <body>
-    <h1><?= $name ?> Dashboard</h1>
+    <h1>Staff 1 Dashboard</h1>
     <a href='<?= base_url(); ?>logout'>Log off</a></h3>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
         Add Transaction

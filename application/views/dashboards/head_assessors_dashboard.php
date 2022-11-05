@@ -7,7 +7,7 @@
     <title>Head of Assessors Dashboard.</title>
 </head>
 <body>
-    <h1><?=$name?> Dashboard</h1>
+    <h1>Head of Assessors Dashboard</h1>
     <a href='<?=base_url();?>logout'>Log off</a></h3>
 </body>
 </html>
