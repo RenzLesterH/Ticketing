@@ -12,9 +12,9 @@
 		<div class="container h-100">
 			<div class="row justify-content-sm-center h-100">
 				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
-					<div class="text-center my-5">
-						<!-- <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="logo" width="100"> -->
-						<h2>System Title Here or Logo!</h2>
+					<div class="text-center">
+						<img src="<?=base_url();?>assets/images/Logo_of_Tagudin,_Ilocos_Sur.png" alt="logo" width="160">
+						<!-- <h2>E-Schedule MO</h2> -->
 					</div>
 					<div class="card shadow-lg py-3">
 						<div class="card-body p-5">
@@ -57,7 +57,7 @@
 
                     <?php } ?>
 					<div class="text-center mt-4 text-muted">
-						Copyright &copy; 2022 &mdash; Your Company 
+						Copyright &copy; 2022 &mdash; E-Schedule MO.
 					</div>
 				</div>
 			</div>
