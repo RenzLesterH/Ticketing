@@ -37,8 +37,8 @@ class Appointment extends CI_Controller {
             
             if($result == "success") 
             {
-                $this->session->set_userdata(array('user_id'=>$user['id'], 'first_name'=>$user['first_name'], 'user_level'=>$user['user_level']));
-                redirect("dashboard");
+                $this->session->set_userdata(array('user_id'=>$user['id'], 'firstname'=>$user['firstname'], 'user_level'=>$user['user_level']));
+                redirect("dashboard"); 
             }
             else 
             {
@@ -47,5 +47,12 @@ class Appointment extends CI_Controller {
             }
         }
 
+    }
+
+    /* This function logouts the user and redirects in the login page. */
+    public function logout() 
+    {
+        $this->session->sess_destroy();
+        redirect("/");   
     }
 }

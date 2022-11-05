@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'appointment';
 $route['login/validate'] = 'appointment/process_login';
+$route['logout'] = 'appointment/logout';
 $route['dashboard'] = 'dashboard';
 // $route['cart'] = 'shopping/cart';
 // $route['remove/(:any)'] = 'shopping/remove/$1';
