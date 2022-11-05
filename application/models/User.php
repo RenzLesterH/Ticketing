@@ -5,7 +5,7 @@ class User extends CI_Model
         */
     function get_user_by_email($email)
     {
-        $query = "SELECT * FROM user WHERE contacts=?";
+        $query = "SELECT * FROM user WHERE email=?";
         return $this->db->query($query, $this->security->xss_clean($email))->result_array()[0];
     }
 
