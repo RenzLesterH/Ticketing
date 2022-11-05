@@ -48,7 +48,8 @@
 
                 <!-- Modal body -->
                 <div class="modal-body p-4">
-                    <form class="row g-3" autocomplete="off" action="">
+                    <form class="row g-3" autocomplete="off" method="post" action="<?= base_url(); ?>add_transaction/validate">
+                        <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                         <div class="col-md-4">
                             <label for="input" class="form-label">First name</label>
                             <input type="text" class="form-control" name="firstname" placeholder="Enter client first name">
@@ -64,7 +65,7 @@
                         <div class="col-6">
                             <label for="input" class="form-label">Barangay</label>
                             <select id="barangay" name="barangay" class="form-select">
-                                <option selected>Choose barangay...</option>
+                                <option selected value="">Choose barangay...</option>
                             </select>
                         </div>
                         <div class="col-6">
@@ -78,7 +79,7 @@
                         <div class="col-md-7">
                             <label for="inputState" class="form-label">Type of transaction</label>
                             <select id="transactions" name="trasaction" class="form-select">
-                                <option selected>Choose transcation type...</option>
+                                <option selected value="">Choose transcation type...</option>
                             </select>
                         </div>
                 </div>
