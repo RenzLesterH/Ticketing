@@ -19,7 +19,7 @@
 					<div class="card shadow-lg py-3">
 						<div class="card-body p-5">
 							<h1 class="fs-2 card-title fw-bold mb-4">Login</h1>
-							<form method="POST" action="<?=base_url();?>login/validate" class="needs-validation" novalidate="" autocomplete="off">
+							<form method="POST" action="<?=base_url();?>login/validate" class="needs-validation" autocomplete="off">
                                 <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">E-Mail Address</label>
