@@ -57,7 +57,7 @@
 
                     <?php } ?>
 					<div class="text-center mt-4 text-muted">
-						Copyright &copy; 2022 &mdash; E-Schedule MO.
+						Copyright &copy; 2022 &mdash; E-Schedule MO.	
 					</div>
 				</div>
 			</div>
