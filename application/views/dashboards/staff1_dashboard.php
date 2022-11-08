@@ -1,97 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>Staff 1 Dashboard.</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords"
+		content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+	<title>Staff 1 Dashboard</title>
+
+	<link href="<?=base_url();?>assets/admin/css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<!-- <style>
+		*{
+			outline: 1px solid black;
+		}
+	</style> -->
 </head>
-<script>
-    $(document).ready(function() {
-        let barangay = "<?= base_url(); ?>assets/json/barangay.json";
-        let transactions = "<?= base_url(); ?>assets/json/transactions.json";
 
-        $.getJSON(transactions, function(data) {
-            $.each(data, function(index, value) {
-                $('#transactions').append('<option value="' + value.Name + '">' + value.Name + '</option>');
-            });
-        });
-
-        $.getJSON(barangay, function(data) {
-            $.each(data, function(index, value) {
-                $('#barangay').append('<option value="' + value.Name + '">' + value.Name + '</option>');
-            });
-        });
-
-    });
-</script>
 <body>
-    <h1>Staff 1 Dashboard</h1>
-    <a href='<?= base_url(); ?>logout'>Log off</a></h3>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-        Add Transaction
-    </button>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+					<span class="align-middle">E-Schedule MO</span>
+				</a>
+				<ul class="sidebar-nav">
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="index.html">
+							<i class="align-middle" data-feather="sliders"></i> <span
+								class="align-middle">Dashboard</span>
+						</a>
+					</li>
 
-    <!-- The Modal -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="pages-profile.html">
+							<i class="align-middle" data-feather="list"></i> <span class="align-middle">List of
+								Transactions</span>
+						</a>
+					</li>
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Transaction Info</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="pages-sign-in.html">
+							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Add Client
+								Transaction</span>
+						</a>
+					</li>
 
-                <!-- Modal body -->
-                <div class="modal-body p-4">
-                    <form class="row g-3" autocomplete="off" method="post" action="<?= base_url(); ?>add_transaction/validate">
-                        <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
-                        <div class="col-md-4">
-                            <label for="input" class="form-label">First name</label>
-                            <input type="text" class="form-control" name="firstname" placeholder="Enter client first name">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="input" class="form-label">Middle name</label>
-                            <input type="text" class="form-control" name="middlename" placeholder="Enter client middle name">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="input" class="form-label">Last name</label>
-                            <input type="text" class="form-control" name="lastname" placeholder="Enter client last name">
-                        </div>
-                        <div class="col-6">
-                            <label for="input" class="form-label">Barangay</label>
-                            <select id="barangay" name="barangay" class="form-select">
-                                <option selected value="">Choose barangay...</option>
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label for="input" class="form-label">Street/Zone</label>
-                            <input type="text" class="form-control" name="street_zone" placeholder="Enter client street or zone">
-                        </div>
-                        <div class="col-5">
-                            <label for="input" class="form-label">Contact Number</label>
-                            <input type="number" class="form-control" name="contact" placeholder="Enter client contact number">
-                        </div>
-                        <div class="col-md-7">
-                            <label for="inputState" class="form-label">Type of transaction</label>
-                            <select id="transactions" name="trasaction" class="form-select">
-                                <option selected value="">Choose transcation type...</option>
-                            </select>
-                        </div>
-                </div>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="pages-sign-up.html">
+							<i class="align-middle" data-feather="search"></i> <span class="align-middle">Track Transactions</span>
+						</a>
+					</li>
 
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add transaction</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="<?= base_url(); ?>logout">
+							<i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Log-out</span>
+						</a>
+					</li>
+
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item">
+							Staff 1
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3">Staff 1 Dashboard</h1>
+
+					<div class="row">
+
+						<div class="w-100">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col mt-0">
+													<h5 class="card-title">Recieved</h5>
+												</div>
+
+												<div class="col-auto">
+													<div class="stat text-primary">
+														<i class="align-middle" data-feather="truck"></i>
+													</div>
+												</div>
+											</div>
+											<h1 class="mt-1 mb-3">100</h1>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-3">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col mt-0">
+													<h5 class="card-title">Prepared</h5>
+												</div>
+
+												<div class="col-auto">
+													<div class="stat text-primary">
+														<i class="align-middle" data-feather="truck"></i>
+													</div>
+												</div>
+											</div>
+											<h1 class="mt-1 mb-3">10</h1>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-3">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col mt-0">
+													<h5 class="card-title">Verified</h5>
+												</div>
+
+												<div class="col-auto">
+													<div class="stat text-primary">
+														<i class="align-middle" data-feather="dollar-sign"></i>
+													</div>
+												</div>
+											</div>
+											<h1 class="mt-1 mb-3">11</h1>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-3">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col mt-0">
+													<h5 class="card-title">Successful Transactions</h5>
+												</div>
+
+												<div class="col-auto">
+													<div class="stat text-primary">
+														<i class="align-middle" data-feather="check"></i>
+													</div>
+												</div>
+											</div>
+											<h1 class="mt-1 mb-3">30</h1>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-11 col-lg-8 col-xxl-9 d-flex">
+							<div class="card flex-fill">
+								<div class="card-header">
+
+									<h5 class="card-title mb-0">Transactions in Months</h5>
+								</div>
+								<div class="card-body py-3">
+									<div class="chart chart-lg">
+										<canvas id="chartjs-dashboard-line"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-11 col-lg-4 col-xxl-3 d-flex">
+							<div class="card flex-fill w-100">
+								<div class="card-header">
+
+									<h5 class="card-title mb-0">Transaction Success Rate</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div class="py-3">
+											<div class="chart chart-xs">
+												<canvas id="chartjs-dashboard-pie"></canvas>
+											</div>
+										</div>
+
+										<table class="table mb-0">
+											<tbody>
+												<tr>
+													<td>Successfull</td>
+													<td class="text-end">4306</td>
+												</tr>
+												<tr>
+													<td>In Progress</td>
+													<td class="text-end">3801</td>
+												</tr>
+												<tr>
+													<td>Cancelled</td>
+													<td class="text-end">1689</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-12 text-center">
+							<p class="mb-0">
+								<a class="text-muted" href="#" target="_blank">E-Schedule MO</a> - <a class="text-muted"
+									href="#">All Rights Reserved</a> &copy;
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script src="<?=base_url();?>assets/admin/js/app.js"></script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+			gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+			// Line chart
+			new Chart(document.getElementById("chartjs-dashboard-line"), {
+				type: "line",
+				data: {
+					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+					datasets: [{
+						label: "Total",
+						fill: true,
+						backgroundColor: gradient,
+						borderColor: window.theme.primary,
+						data: [
+							2115,
+							1562,
+							1584,
+							1892,
+							1587,
+							1923,
+							2566,
+							2448,
+							2805,
+							3438,
+							2917,
+							3327
+						]
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false
+					},
+					hover: {
+						intersect: true
+					},
+					plugins: {
+						filler: {
+							propagate: false
+						}
+					},
+					scales: {
+						xAxes: [{
+							reverse: true,
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								stepSize: 1000
+							},
+							display: true,
+							borderDash: [3, 3],
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}]
+					}
+				}
+			});
+		});
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			// Pie chart
+			new Chart(document.getElementById("chartjs-dashboard-pie"), {
+				type: "pie",
+				data: {
+					labels: ["Successfull", "In Progress", "Cancelled"],
+					datasets: [{
+						data: [4306, 3801, 1689],
+						backgroundColor: [
+							window.theme.primary,
+							window.theme.warning,
+							window.theme.danger
+						],
+						borderWidth: 5
+					}]
+				},
+				options: {
+					responsive: !window.MSInputMethodContext,
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					cutoutPercentage: 75
+				}
+			});
+		});
+	</script>
 </body>
 </html>
