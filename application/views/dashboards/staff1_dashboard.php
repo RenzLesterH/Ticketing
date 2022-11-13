@@ -7,8 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
-	<meta name="keywords"
-		content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
@@ -17,13 +16,47 @@
 
 	<title>Staff 1 Dashboard</title>
 
-	<link href="<?=base_url();?>assets/admin/css/app.css" rel="stylesheet">
+	<link href="<?= base_url(); ?>assets/admin/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-	<!-- <style>
-		*{
+	<style>
+		/* *{
 			outline: 1px solid black;
-		}
-	</style> -->
+		} */
+	</style>
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			//if add client transaction is clicked in the navigation bar. 
+			$(document).on('click', 'li a#add_form', function(){
+				$('#add_transaction').show();
+				var link = $(this); 
+                $('#dashboard_analytics').hide();
+				$( "#dashboard_link" ).removeClass( "active" );
+				$.get(link.attr('href'), function(res) {
+					$( "#add_form_link" ).addClass( "active" );
+					$('#add_transaction').html(res);
+				});
+				return false;
+           	});
+
+			$(document).on('click', 'li a#dashboard_analytics_link', function(){
+				$('#dashboard_analytics').show();
+				$('#add_transaction').hide();
+				$( "#dashboard_link" ).addClass( "active" );
+				$( "#add_form_link" ).removeClass( "active" );
+				return false;
+           	});
+
+			$(document).on('submit', 'form#add_client_form', function(){
+				var form = $(this);
+                $.post(form.attr('action'), form.serialize(), function(res) {
+                    $('#add_transaction').html(res); 
+                });
+                return false;
+           	});
+
+		});
+	</script>
 </head>
 
 <body>
@@ -34,10 +67,9 @@
 					<span class="align-middle">E-Schedule MO</span>
 				</a>
 				<ul class="sidebar-nav">
-					<li class="sidebar-item active">
-						<a class="sidebar-link" href="index.html">
-							<i class="align-middle" data-feather="sliders"></i> <span
-								class="align-middle">Dashboard</span>
+					<li class="sidebar-item active" id="dashboard_link">
+						<a class="sidebar-link" href="#" id="dashboard_analytics_link">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 						</a>
 					</li>
 
@@ -48,8 +80,8 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-in.html">
+					<li class="sidebar-item" id="add_form_link">
+						<a class="sidebar-link active" href="load/add_form" id="add_form">
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Add Client
 								Transaction</span>
 						</a>
@@ -86,7 +118,7 @@
 				</div>
 			</nav>
 
-			<main class="content">
+			<main id="dashboard_analytics" class="content">
 				<div class="container-fluid p-0">
 
 					<h1 class="h3 mb-3">Staff 1 Dashboard</h1>
@@ -228,13 +260,16 @@
 				</div>
 			</main>
 
+			<main id="add_transaction" class="content">
+		
+			</main>
+
 			<footer class="footer">
 				<div class="container-fluid">
 					<div class="row text-muted">
 						<div class="col-12 text-center">
 							<p class="mb-0">
-								<a class="text-muted" href="#" target="_blank">E-Schedule MO</a> - <a class="text-muted"
-									href="#">All Rights Reserved</a> &copy;
+								<a class="text-muted" href="#" target="_blank">E-Schedule MO</a> - <a class="text-muted" href="#">All Rights Reserved</a> &copy;
 							</p>
 						</div>
 					</div>
@@ -243,10 +278,11 @@
 		</div>
 	</div>
 
-	<script src="<?=base_url();?>assets/admin/js/app.js"></script>
+	<script src="<?= base_url(); ?>assets/admin/js/app.js"></script>
 
+	<!-- For data analytics in dashboard. -->
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
+		document.addEventListener("DOMContentLoaded", function() {
 			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
 			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
 			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
@@ -316,7 +352,7 @@
 		});
 	</script>
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
+		document.addEventListener("DOMContentLoaded", function() {
 			// Pie chart
 			new Chart(document.getElementById("chartjs-dashboard-pie"), {
 				type: "pie",
@@ -343,5 +379,8 @@
 			});
 		});
 	</script>
+	<!-- end of comment data analytics in dashboard. -->
+
 </body>
+
 </html>

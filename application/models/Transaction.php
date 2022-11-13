@@ -14,7 +14,7 @@ class Transaction extends CI_Model
     function add_transaction_validation()
     {
         $this->load->library("form_validation");
-        $this->form_validation->set_error_delimiters('<div>', '</div>');
+        $this->form_validation->set_error_delimiters('<p class="mb-2 bg-danger text-white p-2 col-11 col-lg-8 col-xxl-9 text-center mx-auto">', '</p>');
         $this->form_validation->set_rules("firstname", "First Name", "trim|required");
         $this->form_validation->set_rules("middlename", "Middle Name", "trim|required");
         $this->form_validation->set_rules("lastname", "Last Name", "trim|required");

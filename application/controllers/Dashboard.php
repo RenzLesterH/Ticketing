@@ -26,6 +26,13 @@ class Dashboard extends CI_Controller {
         }      		
 	}
 
+    public function load_partial_pages()
+	{   
+        // $data["orders"] = $this->Order->get_all_orders();
+        $this->session->set_flashdata('success', null);
+        $this->load->view("dashboards/partial_pages/add_form");   		
+	}
+
     /* This function handles the validation and adding new product in database.  */
     public function add_transaction_process() 
     {
@@ -34,14 +41,14 @@ class Dashboard extends CI_Controller {
         if($result !== null)
         {
             $this->session->set_flashdata('input_errors', $result);
-            redirect('dashboard');
+            $this->load->view("dashboards/partial_pages/add_form");
         }
         else
         {
             $form_data = $this->input->post();
             $this->Transaction->add_transaction($form_data);
-            $this->session->set_flashdata('success', 'Product added successfully!');
-            redirect('dashboard');
+            $this->session->set_flashdata('success', 'Client transaction added successfully!');
+            $this->load->view("dashboards/partial_pages/add_form");
         }
     }
 
