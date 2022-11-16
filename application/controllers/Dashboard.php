@@ -26,11 +26,17 @@ class Dashboard extends CI_Controller {
         }      		
 	}
 
-    public function load_partial_pages()
+    public function load_partial_pages($page)
 	{   
-        // $data["orders"] = $this->Order->get_all_orders();
-        $this->session->set_flashdata('success', null);
-        $this->load->view("dashboards/partial_pages/add_form");   		
+        // 1 = As list of Appointment
+        // 2 = As add client transaction form
+        if($page == "1"){
+            // $data["orders"] = $this->Order->get_all_orders();
+            echo("List of appointment");
+        }elseif ($page == "2") {
+            $this->load->view("dashboards/partial_pages/add_form"); 
+        }
+          		
 	}
 
     /* This function handles the validation and adding new product in database.  */

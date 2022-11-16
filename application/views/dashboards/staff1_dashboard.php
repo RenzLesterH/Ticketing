@@ -26,31 +26,35 @@
 	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			//if add client transaction is clicked in the navigation bar. 
-			$(document).on('click', 'li a#add_form', function(){
-				$('#add_transaction').show();
-				var link = $(this); 
-                $('#dashboard_analytics').hide();
+
+			//The page will reload if clicked in the navigation bar. 
+			$(document).on('click', 'li.navigation_link', function(){
+				let navigation_link_id = $(this).attr('id'); //id of the li.navigation_link
+				let link = $('li#'+navigation_link_id+' a'); //anchor tag of navigation_link_id
+				$('#load_page').show(); 
+				$('#dashboard_analytics').hide();
 				$( "#dashboard_link" ).removeClass( "active" );
+				$( 'li.navigation_link' ).removeClass( "active" ); // remove all first the li.navigation_link that has a active id.
+				$( "#"+navigation_link_id ).addClass( "active" );
 				$.get(link.attr('href'), function(res) {
-					$( "#add_form_link" ).addClass( "active" );
-					$('#add_transaction').html(res);
+					$('#load_page').html(res);
 				});
 				return false;
            	});
 
 			$(document).on('click', 'li a#dashboard_analytics_link', function(){
 				$('#dashboard_analytics').show();
-				$('#add_transaction').hide();
+				$('#load_page').hide();
 				$( "#dashboard_link" ).addClass( "active" );
-				$( "#add_form_link" ).removeClass( "active" );
+				$( "li.navigation_link" ).removeClass( "active" );
 				return false;
            	});
 
+			//when add client transaction form is submitted.
 			$(document).on('submit', 'form#add_client_form', function(){
 				var form = $(this);
                 $.post(form.attr('action'), form.serialize(), function(res) {
-                    $('#add_transaction').html(res); 
+                    $('#load_page').html(res); 
                 });
                 return false;
            	});
@@ -73,23 +77,17 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-profile.html">
+					<li class="sidebar-item navigation_link" id="list_transaction_link">
+						<a class="sidebar-link" href="load/1" id="list_transaction">
 							<i class="align-middle" data-feather="list"></i> <span class="align-middle">List of
 								Transactions</span>
 						</a>
 					</li>
 
-					<li class="sidebar-item" id="add_form_link">
-						<a class="sidebar-link active" href="load/add_form" id="add_form">
+					<li class="sidebar-item navigation_link" id="add_form_link">
+						<a class="sidebar-link" href="load/2" id="add_form">
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Add Client
 								Transaction</span>
-						</a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-up.html">
-							<i class="align-middle" data-feather="search"></i> <span class="align-middle">Track Transactions</span>
 						</a>
 					</li>
 
@@ -260,8 +258,12 @@
 				</div>
 			</main>
 
-			<main id="add_transaction" class="content">
+			<main id="load_page" class="content">
 		
+			</main>
+
+			<main class="content">
+
 			</main>
 
 			<footer class="footer">

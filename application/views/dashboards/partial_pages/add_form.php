@@ -22,9 +22,9 @@
     <div class="row">
 
         <?php if (!empty($this->session->flashdata('success'))) { ?>
-            <div class="mb-2 bg-success text-white p-2 col-11 col-lg-8 col-xxl-9 mx-auto text-center">
+            <p class="mb-2 bg-success text-white p-2 col-11 col-lg-8 col-xxl-9 mx-auto text-center">
                 <?= $this->session->flashdata('success'); ?>
-            </div>
+            </p>
         <?php } else if (!empty($this->session->flashdata('input_errors'))) { ?>
                 <?= $this->session->flashdata('input_errors'); ?>
         <?php } ?>
@@ -78,4 +78,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>  
