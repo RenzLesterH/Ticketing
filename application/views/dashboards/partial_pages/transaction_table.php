@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Transaction No.</th>
                         <th>Transaction Type</th>
                         <th>Status</th>
                         <th>Reveived at</th>
@@ -25,6 +26,7 @@
                     ?>
                         <tr>
                             <td><?= $client_transaction['firstname'] . " " . $client_transaction['middlename'] . " " . $client_transaction['lastname']  ?></td>
+                            <td><?= $client_transaction['transaction_code'] ?></td>
                             <td><?= $client_transaction['transaction'] ?></td>
                             <td> <span class="badge bg-primary"><?= $client_transaction['progress'] ?></span></td>
                             <td><?= date("F j, Y", strtotime($received_at_date)) ?></td>

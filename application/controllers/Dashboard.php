@@ -70,8 +70,8 @@ class Dashboard extends CI_Controller {
     {
         $form_data = $this->input->post();
         $response = $this->Transaction->update_client_transaction_by_id($form_data);
-        $this->session->set_flashdata('success', 'Client transaction no. 000 of '.$response. ' is updated successfully!');
-        $this->load_partial_pages(1);
+        $this->session->set_flashdata('success', $response);
+        $this->load_partial_pages(1); 
     }
 
 }

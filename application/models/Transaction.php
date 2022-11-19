@@ -8,6 +8,7 @@ class Transaction extends CI_Model
         return $this->db->query(
             "SELECT 
                 client.*,
+                transaction.transaction_code,
                 transaction.transaction,
                 transaction.progress,
                 transaction.received_at
@@ -77,7 +78,7 @@ class Transaction extends CI_Model
         /* Fetch the successfull inserted client id */
         $insert_client_id = $this->db->insert_id();
 
-        /* Generate unique and random ticket reference id */
+        /* Generate transaction code */
         $transaction_code = 0; 
         $row = $this->db->query('SELECT MAX(transaction_id) AS `maxid` FROM transaction')->row(); 
         if ($row) { 
@@ -136,7 +137,8 @@ class Transaction extends CI_Model
             $this->security->xss_clean($transaction_data['id']),
         );
         $this->db->query($query, $values);
-        return $transaction_data['firstname']." ".$transaction_data['middlename']." ".$transaction_data['lastname'];
+        $code_no = $this->db->query('SELECT transaction_code AS `transaction_code` FROM transaction WHERE client_id='.$transaction_data["id"].'')->row(); 
+        return 'Client transaction no. '. $code_no->transaction_code .' of '.$transaction_data['firstname']." ".$transaction_data['middlename']." ".$transaction_data['lastname']. ' is updated successfully!';
     }
 
     // /* This function handles the deleting of specific product in the database by using the product id. */
