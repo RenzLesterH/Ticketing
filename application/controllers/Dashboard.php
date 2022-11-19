@@ -31,8 +31,8 @@ class Dashboard extends CI_Controller {
         // 1 = As list of Appointment
         // 2 = As add client transaction form
         if($page == "1"){
-            // $data["orders"] = $this->Order->get_all_orders();
-            echo("List of appointment");
+            $data["client_transactions"] = $this->Transaction->get_all_transaction();
+            $this->load->view("dashboards/partial_pages/transaction_table", $data);
         }elseif ($page == "2") {
             $this->load->view("dashboards/partial_pages/add_form"); 
         }

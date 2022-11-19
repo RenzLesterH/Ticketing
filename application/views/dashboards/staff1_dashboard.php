@@ -9,8 +9,12 @@
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+	<!-- <link rel="shortcut icon" href="img/icons/ispsc_logo.png" /> -->
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
@@ -18,46 +22,48 @@
 
 	<link href="<?= base_url(); ?>assets/admin/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+	<link href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 	<style>
 		/* *{
 			outline: 1px solid black;
 		} */
 	</style>
-	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script>
 		$(document).ready(function() {
 
-			//The page will reload if clicked in the navigation bar. 
-			$(document).on('click', 'li.navigation_link', function(){
+			//The partial page will reload if clicked in the navigation bar. 
+			$(document).on('click', 'li.navigation_link', function() {
 				let navigation_link_id = $(this).attr('id'); //id of the li.navigation_link
-				let link = $('li#'+navigation_link_id+' a'); //anchor tag of navigation_link_id
-				$('#load_page').show(); 
+				let link = $('li#' + navigation_link_id + ' a'); //anchor tag of navigation_link_id
+				$('#load_page').show();
 				$('#dashboard_analytics').hide();
-				$( "#dashboard_link" ).removeClass( "active" );
-				$( 'li.navigation_link' ).removeClass( "active" ); // remove all first the li.navigation_link that has a active id.
-				$( "#"+navigation_link_id ).addClass( "active" );
+				$("#dashboard_link").removeClass("active");
+				$('li.navigation_link').removeClass("active"); // remove all first the li.navigation_link that has a active id.
+				$("#" + navigation_link_id).addClass("active");
 				$.get(link.attr('href'), function(res) {
 					$('#load_page').html(res);
 				});
 				return false;
-           	});
+			});
 
-			$(document).on('click', 'li a#dashboard_analytics_link', function(){
+			$(document).on('click', 'li a#dashboard_analytics_link', function() {
 				$('#dashboard_analytics').show();
 				$('#load_page').hide();
-				$( "#dashboard_link" ).addClass( "active" );
-				$( "li.navigation_link" ).removeClass( "active" );
+				$("#dashboard_link").addClass("active");
+				$("li.navigation_link").removeClass("active");
 				return false;
-           	});
+			});
 
-			//when add client transaction form is submitted.
-			$(document).on('submit', 'form#add_client_form', function(){
+			//when add client info transaction form is submitted.
+			$(document).on('submit', 'form#add_client_form', function() {
 				var form = $(this);
-                $.post(form.attr('action'), form.serialize(), function(res) {
-                    $('#load_page').html(res); 
-                });
-                return false;
-           	});
+				$.post(form.attr('action'), form.serialize(), function(res) {
+					$('#load_page').html(res);
+				});
+				return false;
+			});
 
 		});
 	</script>
@@ -258,12 +264,8 @@
 				</div>
 			</main>
 
-			<main id="load_page" class="content">
-		
-			</main>
-
-			<main class="content">
-
+			<main id="load_page" class="content">		
+						
 			</main>
 
 			<footer class="footer">
@@ -281,6 +283,8 @@
 	</div>
 
 	<script src="<?= base_url(); ?>assets/admin/js/app.js"></script>
+	<script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.12.0/js/dataTables.bootstrap5.min.js"></script>
 
 	<!-- For data analytics in dashboard. -->
 	<script>

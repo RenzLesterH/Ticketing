@@ -2,11 +2,23 @@
 class Transaction extends CI_Model
 {
 
-    /* This function returns all the products detail from the database. */
-    // function get_all_products()
-    // {
-    //     return $this->db->query("SELECT * FROM products;")->result_array();
-    // }
+    /* This function returns all the client transaction detail from the database. */
+    function get_all_transaction()
+    {
+        return $this->db->query(
+            "SELECT 
+                client.*,
+                transaction.transaction,
+                transaction.progress,
+                transaction.received_at
+            FROM
+                client
+                    LEFT JOIN
+                transaction ON client.id = transaction.client_id
+            WHERE
+                transaction.progress = 'On Going';"
+        )->result_array();
+    }
 
     /* This function handles the validation of inputs in adding new transaction and it returns an 
         error message if error is found in the form.  
