@@ -13,11 +13,30 @@ class Transaction extends CI_Model
                 transaction.received_at
             FROM
                 client
-                    LEFT JOIN
+            LEFT JOIN
                 transaction ON client.id = transaction.client_id
             WHERE
                 transaction.progress = 'On Going';"
         )->result_array();
+    }
+
+    function get_client_transaction_by_id($id)
+    {
+        $query = 
+            "SELECT 
+                client.*,
+                transaction.transaction,
+                transaction.progress,
+                transaction.received_at
+            FROM
+                client
+            LEFT JOIN
+                transaction ON client.id = transaction.client_id
+            WHERE
+                transaction.progress = 'On Going'
+            AND 
+                client.id = ?";
+        return $this->db->query($query, $id)->result_array();
     }
 
     /* This function handles the validation of inputs in adding new transaction and it returns an 

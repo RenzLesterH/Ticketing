@@ -58,4 +58,11 @@ class Dashboard extends CI_Controller {
         }
     }
 
+    /* This function handles the validation and adding new product in database.  */
+    public function view_client_transaction($client_transaction_id) 
+    {
+        $data["client_transaction"] = $this->Transaction->get_client_transaction_by_id($client_transaction_id);
+        $this->load->view("dashboards/partial_pages/view_client_transaction", $data);
+    }
+
 }
