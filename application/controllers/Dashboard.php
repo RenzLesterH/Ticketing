@@ -53,16 +53,25 @@ class Dashboard extends CI_Controller {
         {
             $form_data = $this->input->post();
             $this->Transaction->add_transaction($form_data);
-            $this->session->set_flashdata('success', 'Client transaction added successfully!');
+            $this->session->set_flashdata('added_success', 'Client transaction added successfully!');
             $this->load->view("dashboards/partial_pages/add_form");
         }
     }
 
-    /* This function handles the validation and adding new product in database.  */
+    /* This function handles the viewing of client transaction.  */
     public function view_client_transaction($client_transaction_id) 
     {
         $data["client_transaction"] = $this->Transaction->get_client_transaction_by_id($client_transaction_id);
         $this->load->view("dashboards/partial_pages/view_client_transaction", $data);
+    }
+
+    /* This function handles the validation and adding new product in database.  */
+    public function update_transaction_process()
+    {
+        $form_data = $this->input->post();
+        $response = $this->Transaction->update_client_transaction_by_id($form_data);
+        $this->session->set_flashdata('success', 'Client transaction no. 000 of '.$response. ' is updated successfully!');
+        $this->load_partial_pages(1);
     }
 
 }

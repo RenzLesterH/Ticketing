@@ -56,6 +56,7 @@ $route['dashboard'] = 'dashboard';
 $route['add_transaction/validate'] = 'dashboard/add_transaction_process';
 $route['view_client_transaction/(:any)'] = 'dashboard/view_client_transaction/$1';
 $route['load/(:any)'] = 'dashboard/load_partial_pages/$1';
+$route['update_transaction/validate'] = 'dashboard/update_transaction_process';
 // $route['cart'] = 'shopping/cart';
 // $route['remove/(:any)'] = 'shopping/remove/$1';
 // $route['login'] = 'authentication/login';

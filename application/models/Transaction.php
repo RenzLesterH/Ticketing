@@ -78,26 +78,18 @@ class Transaction extends CI_Model
         $insert_client_id = $this->db->insert_id();
 
         /* Generate unique and random ticket reference id */
-        $current_day = date("HisYmd");
-        $random_number = strtoupper(substr(uniqid(sha1(time())),0,4));
-        $unique = "#" . $current_day . $random_number;
-
-        /* Insert details in ticket table. */
-        $ticket_query = "INSERT INTO ticket (reference_code, created_at) VALUES (?,?)";
-        $ticket_values = array(
-            $unique,
-            date("Y-m-d, H:i:s")
-        );
-
-        $this->db->query($ticket_query, $ticket_values);
-        /* Fetch the successfull inserted ticket id */
-        $insert_ticket_id = $this->db->insert_id();
+        $transaction_code = 0; 
+        $row = $this->db->query('SELECT MAX(transaction_id) AS `maxid` FROM transaction')->row(); 
+        if ($row) { 
+            $transaction_code = $row->maxid;
+            (int)$transaction_code++;
+        }
 
         /* Insert details in transaction table. */
-        $transaction_query = "INSERT INTO transaction (client_id, ticket_id, transaction, progress, received_at) VALUES (?,?,?,?,?)";
+        $transaction_query = "INSERT INTO transaction (client_id, transaction_code, transaction, progress, received_at) VALUES (?,?,?,?,?)";
         $transaction_values = array(
             $insert_client_id,
-            $insert_ticket_id,
+            $transaction_code,
             $this->security->xss_clean($transaction['trasaction']),
             "On Going",
             date("Y-m-d, H:i:s")
@@ -113,21 +105,39 @@ class Transaction extends CI_Model
     //     return $this->db->query($query, $id)->result_array();
     // }
 
-    // /* This function handles the updating of products in the database and returns the product id back. */
-    // function update_product($transaction)
-    // {
-    //     $query = "UPDATE products SET name = ?, description = ?, price = ?, inventory_count = ?, updated_at = ? WHERE id = ?";
-    //     $values = array(
-    //         $this->security->xss_clean($transaction['name']),
-    //         $this->security->xss_clean($transaction['description']),
-    //         $this->security->xss_clean($transaction['price']),
-    //         $this->security->xss_clean($transaction['inventory_count']),
-    //         date('Y-m-d, H:i:s'),
-    //         $transaction['id']
-    //     );
-    //     $this->db->query($query, $values);
-    //     return $transaction['id'];
-    // }
+    /* This function handles the updating of products in the database and returns the product id back. */
+    function update_client_transaction_by_id($transaction_data)
+    {
+        $query = 
+            "UPDATE 
+                client
+             INNER JOIN
+                transaction 
+             ON 
+                client.id = transaction.client_id 
+             SET 
+                client.firstname = ?,
+                client.middlename = ?,
+                client.lastname = ?,
+                client.contacts = ?,
+                client.barangay = ?,
+                client.street_zone = ?,
+                transaction.transaction = ?
+             WHERE
+                client.id = ?";
+        $values = array(
+            $this->security->xss_clean($transaction_data['firstname']),
+            $this->security->xss_clean($transaction_data['middlename']),
+            $this->security->xss_clean($transaction_data['lastname']),
+            $this->security->xss_clean($transaction_data['contact']),
+            $this->security->xss_clean($transaction_data['barangay']),
+            $this->security->xss_clean($transaction_data['street_zone']),
+            $this->security->xss_clean($transaction_data['transaction']),
+            $this->security->xss_clean($transaction_data['id']),
+        );
+        $this->db->query($query, $values);
+        return $transaction_data['firstname']." ".$transaction_data['middlename']." ".$transaction_data['lastname'];
+    }
 
     // /* This function handles the deleting of specific product in the database by using the product id. */
     // function remove_product_by_id($id)

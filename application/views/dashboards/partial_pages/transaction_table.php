@@ -1,4 +1,10 @@
 <h1 class="h3 mb-3">Client Transactions</h1>
+<?php if (!empty($this->session->flashdata('success'))) { ?>
+    <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
+        <i class="fa-solid fa-circle-check"></i> <?= $this->session->flashdata('success'); ?>
+        <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php } ?>
 <div class="col-15 col-lg-12 col-xxl-13 d-flex mx-auto">
 
     <div class="card flex-fill">
@@ -38,8 +44,7 @@
     <div class="modal" id="view_client_modal" data-bs-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" id="view_client_transaction_form">
-
-
+                <!-- Load Form -->
             </div>
         </div>
     </div>
@@ -78,7 +83,13 @@
                 $("#notification_warning").hide();
             });
 
-            
-
+            $(document).on('click', '.save_button', function() {
+                let form = $("form#edit_form_transaction");
+				$.post(form.attr('action'), form.serialize(), function(res) {
+                    $( ".btn-close" ).trigger( "click" );
+					$('#load_page').html(res);
+				});
+                return false;
+            });
         });
     </script>

@@ -8,7 +8,9 @@
         <div class="alert alert-warning p-2" id="notification_warning" role="alert">
             <i class="fa-solid fa-circle-exclamation"></i> Inputs are disabled. Please click <strong>Edit</strong> Button to edit details.
         </div>
-      <form class="row g-3" autocomplete="off" action="" id="edit_form_transaction">
+      <form class="row g-3" autocomplete="off" method="post" action="<?= base_url(); ?>update_transaction/validate" id="edit_form_transaction">
+          <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
+          <input type="text" name="id" value="<?= $client_transaction[0]['id'] ?>" hidden>
           <div class="col-md-4">
               <label for="input" class="form-label">First name</label>
               <input type="text" class="form-control bg-white" name="firstname" value="<?= $client_transaction[0]['firstname'] ?>" disabled>
@@ -37,7 +39,7 @@
           </div>
           <div class="col-md-7">
               <label for="inputState" class="form-label">Type of transaction</label>
-              <select id="transactions" name="trasaction" class="bg-white form-select" disabled>
+              <select id="transactions" name="transaction" class="bg-white form-select" disabled>
                   <option selected><?= $client_transaction[0]['transaction'] ?></option>
               </select>
           </div>

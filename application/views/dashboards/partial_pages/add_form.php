@@ -21,10 +21,11 @@
 
     <div class="row">
 
-        <?php if (!empty($this->session->flashdata('success'))) { ?>
-            <p class="mb-2 bg-success text-white p-2 col-11 col-lg-8 col-xxl-9 mx-auto text-center">
-                <?= $this->session->flashdata('success'); ?>
-            </p>
+        <?php if (!empty($this->session->flashdata('added_success'))) { ?>
+            <div class="alert alert-success alert-dismissible fade show p-2 col-11 col-lg-8 col-xxl-9 mx-auto" role="alert">
+                <i class="fa-solid fa-circle-check"></i> <?= $this->session->flashdata('added_success'); ?>
+                <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         <?php } else if (!empty($this->session->flashdata('input_errors'))) { ?>
                 <?= $this->session->flashdata('input_errors'); ?>
         <?php } ?>
