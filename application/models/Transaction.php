@@ -17,7 +17,7 @@ class Transaction extends CI_Model
             LEFT JOIN
                 transaction ON client.id = transaction.client_id
             WHERE
-                transaction.progress = 'On Going';"
+                transaction.progress = 'On Going' OR transaction.progress = 'Pending'"
         )->result_array();
     }
 
@@ -28,16 +28,15 @@ class Transaction extends CI_Model
                 client.*,
                 transaction.transaction,
                 transaction.progress,
+                transaction.has_requirements,
                 transaction.received_at
             FROM
                 client
             LEFT JOIN
                 transaction ON client.id = transaction.client_id
             WHERE
-                transaction.progress = 'On Going'
-            AND 
                 client.id = ?";
-        return $this->db->query($query, $id)->result_array();
+        return $this->db->query($query, $id)->result_array(); 
     }
 
     /* This function handles the validation of inputs in adding new transaction and it returns an 
@@ -85,14 +84,24 @@ class Transaction extends CI_Model
             $transaction_code = $row->maxid;
             (int)$transaction_code++;
         }
+        $has_requirements = 0;
+        $progress = "Pending";
+        if(isset($transaction['requirements'])){
+            $progress = "On Going";
+            $has_requirements = 1;
+        }
 
         /* Insert details in transaction table. */
-        $transaction_query = "INSERT INTO transaction (client_id, transaction_code, transaction, progress, received_at) VALUES (?,?,?,?,?)";
+        $transaction_query = 
+            "INSERT INTO transaction 
+                (client_id, transaction_code, transaction, progress, has_requirements, received_at) 
+            VALUES (?,?,?,?,?,?)";
         $transaction_values = array(
             $insert_client_id,
             $transaction_code,
             $this->security->xss_clean($transaction['trasaction']),
-            "On Going",
+            $progress,
+            $has_requirements,
             date("Y-m-d, H:i:s")
         );
         
@@ -109,6 +118,12 @@ class Transaction extends CI_Model
     /* This function handles the updating of products in the database and returns the product id back. */
     function update_client_transaction_by_id($transaction_data)
     {
+        $has_requirements = 0;
+        $progress = "Pending";
+        if(isset($transaction_data['requirements'])){
+            $progress = "On Going";
+            $has_requirements = 1;
+        }
         $query = 
             "UPDATE 
                 client
@@ -123,7 +138,9 @@ class Transaction extends CI_Model
                 client.contacts = ?,
                 client.barangay = ?,
                 client.street_zone = ?,
-                transaction.transaction = ?
+                transaction.transaction = ?,
+                transaction.progress = ?,
+                transaction.has_requirements = ?
              WHERE
                 client.id = ?";
         $values = array(
@@ -134,6 +151,8 @@ class Transaction extends CI_Model
             $this->security->xss_clean($transaction_data['barangay']),
             $this->security->xss_clean($transaction_data['street_zone']),
             $this->security->xss_clean($transaction_data['transaction']),
+            $progress,
+            $has_requirements,
             $this->security->xss_clean($transaction_data['id']),
         );
         $this->db->query($query, $values);

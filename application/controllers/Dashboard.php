@@ -52,7 +52,7 @@ class Dashboard extends CI_Controller {
         else
         {
             $form_data = $this->input->post();
-            $this->Transaction->add_transaction($form_data);
+            $this->Transaction->add_transaction($form_data); 
             $this->session->set_flashdata('added_success', 'Client transaction added successfully!');
             $this->load->view("dashboards/partial_pages/add_form");
         }

@@ -71,6 +71,13 @@
                                 <option selected value="">Choose transcation type...</option>
                             </select>
                         </div>
+                        <div class="col-7 mb-2">
+                            <label class="form-check">
+                            <input class="form-check-input" id="check_box_requirements" name="requirements" type="checkbox" value="0">
+                            <span class="form-check-label">
+                                Check if client has all the requirements.
+                            </span>
+                        </div>
                         <div class="text-end mt-3">
                             <button type="submit" class="btn btn-lg btn-primary">Add Transcation</button>
                         </div>

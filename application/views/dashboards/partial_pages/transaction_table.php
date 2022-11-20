@@ -28,7 +28,13 @@
                             <td><?= $client_transaction['firstname'] . " " . $client_transaction['middlename'] . " " . $client_transaction['lastname']  ?></td>
                             <td><?= $client_transaction['transaction_code'] ?></td>
                             <td><?= $client_transaction['transaction'] ?></td>
-                            <td> <span class="badge bg-primary"><?= $client_transaction['progress'] ?></span></td>
+                            <td> 
+                            <?php if ($client_transaction['progress'] === "On Going") { ?>  
+                                <span class="badge bg-primary"><?= $client_transaction['progress'] ?></span>
+                            <?php }else{ ?>
+                                <span class="badge bg-warning"><?= $client_transaction['progress'] ?></span>
+                            <?php } ?>
+                            </td>
                             <td><?= date("F j, Y", strtotime($received_at_date)) ?></td>
                             <td>
                                 <button type="button" class="btn btn-outline-info edit_transaction" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#view_client_modal">
