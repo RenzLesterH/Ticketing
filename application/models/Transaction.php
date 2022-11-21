@@ -52,6 +52,7 @@ class Transaction extends CI_Model
         $this->form_validation->set_rules("barangay", "Barangay", "trim|required");
         $this->form_validation->set_rules('street_zone', 'Street/Zone', 'trim|required');
         $this->form_validation->set_rules("contact", "Contact Number", "trim|required");
+        $this->form_validation->set_rules("received_by", "Received by", "trim|required");
         $this->form_validation->set_rules("trasaction", "Type of transaction", "trim|required");
 
         if (!$this->form_validation->run()) {
@@ -91,6 +92,8 @@ class Transaction extends CI_Model
             $has_requirements = 1;
         }
 
+        $received_at_details = [$this->security->xss_clean($transaction['received_by']), date("Y-m-d, H:i:s")];
+
         /* Insert details in transaction table. */
         $transaction_query = 
             "INSERT INTO transaction 
@@ -102,7 +105,7 @@ class Transaction extends CI_Model
             $this->security->xss_clean($transaction['trasaction']),
             $progress,
             $has_requirements,
-            date("Y-m-d, H:i:s")
+            json_encode($received_at_details)
         );
         
         $this->db->query($transaction_query, $transaction_values);

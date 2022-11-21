@@ -61,17 +61,22 @@
                             <label for="input" class="form-label">Street/Zone</label>
                             <input type="text" class="form-control py-2" name="street_zone" placeholder="Enter client street or zone" required>
                         </div>
-                        <div class="col-5 mb-2">
+                        <div class="col-6 mb-2">
                             <label for="input" class="form-label">Contact Number</label>
                             <input type="number" class="form-control py-2" name="contact" placeholder="Enter client contact number" required>
                         </div>
-                        <div class="col-7 mb-2">
+                        
+                        <div class="col-6 mb-2">
+                        <label for="input" class="form-label">Received by</label>
+                            <input type="text" class="form-control py-2" name="received_by" placeholder="Enter who received this." required>
+                        </div>
+                        <div class="col-12 mb-2">
                             <label for="inputState" class="form-label">Type of transaction</label>
                             <select id="transactions" name="trasaction" class="form-select py-2" required>
                                 <option selected value="">Choose transcation type...</option>
                             </select>
                         </div>
-                        <div class="col-7 mb-2">
+                        <div class="col-6 mb-2">
                             <label class="form-check">
                             <input class="form-check-input" id="check_box_requirements" name="requirements" type="checkbox" value="0">
                             <span class="form-check-label">

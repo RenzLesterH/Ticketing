@@ -16,13 +16,14 @@
                         <th>Transaction No.</th>
                         <th>Transaction Type</th>
                         <th>Status</th>
-                        <th>Reveived at</th>
+                        <th>Reveived by</th>
+                        <th>Reveived date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($client_transactions as $client_transaction) {
-                        $received_at_date = $client_transaction['received_at']; //convert to readable format.
+                        $received_at = json_decode($client_transaction['received_at']); //convert to readable format.
                     ?>
                         <tr>
                             <td><?= $client_transaction['firstname'] . " " . $client_transaction['middlename'] . " " . $client_transaction['lastname']  ?></td>
@@ -35,7 +36,8 @@
                                 <span class="badge bg-warning"><?= $client_transaction['progress'] ?></span>
                             <?php } ?>
                             </td>
-                            <td><?= date("F j, Y", strtotime($received_at_date)) ?></td>
+                            <td><?= $received_at[0] ?></td>
+                            <td><?= date("F j, Y", strtotime($received_at[1])); ?></td>
                             <td>
                                 <button type="button" class="btn btn-outline-info edit_transaction" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#view_client_modal">
                                     View more

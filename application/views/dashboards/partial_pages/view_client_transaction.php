@@ -8,6 +8,10 @@
       <div class="alert alert-warning p-2" id="notification_warning" role="alert">
           <i class="fa-solid fa-circle-exclamation"></i> Inputs are disabled. Please click <strong>Edit</strong> Button to edit details.
       </div>
+      <?php
+            $received_by = json_decode($client_transaction[0]['received_at']);
+      ?>
+      <h4 class="mb-4 text-muted">Recieved by: <?= $received_by[0] ?></h4>
       <form class="row g-3" autocomplete="off" method="post" action="<?= base_url(); ?>update_transaction/validate" id="edit_form_transaction">
           <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
           <input type="text" name="id" value="<?= $client_transaction[0]['id'] ?>" hidden>
