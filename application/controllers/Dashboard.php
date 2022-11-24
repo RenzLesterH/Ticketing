@@ -14,22 +14,14 @@ class Dashboard extends CI_Controller {
     /* This function redirect user to the dashboard. */  
 	public function index()
 	{   
-        $user_level = $this->session->userdata('user_level');	
-        if($user_level === "1"){ // This is for Staff 1
-            $this->load->view('dashboards/staff1_dashboard');
-        }elseif ($user_level === "2") { // This is for Staff 2
-            $this->load->view('dashboards/staff2_dashboard');
-        }elseif ($user_level === "3") { // This is for Staff 3
-            $this->load->view('dashboards/staff3_dashboard');
-        }elseif ($user_level === "4") { // This is for Head
-            $this->load->view('dashboards/head_assessors_dashboard');
-        }      		
+        $user_level = $this->session->userdata('user_level');
+        $this->load->view('dashboards/dashboard');     		
 	}
 
     public function load_partial_pages($page)
 	{   
         // 1 = As list of Appointment
-        // 2 = As add client transaction form
+        // 2 = As add client transaction form 
         if($page == "1"){
             $data["client_transactions"] = $this->Transaction->get_all_transaction();
             $this->load->view("dashboards/partial_pages/transaction_table", $data);
@@ -73,5 +65,19 @@ class Dashboard extends CI_Controller {
         $this->session->set_flashdata('success', $response);
         $this->load_partial_pages(1); 
     }
+
+     /* This function handles the validation and adding new product in database.  */
+     public function prepare_client_transaction_process()
+     {
+         $form_data = $this->input->post();
+         $response = $this->Transaction->update_client_transaction_progress_by_id($form_data);
+         $this->session->set_flashdata('success', $response);
+         $this->load_partial_pages(1); 
+     }
+
+     public function view_action_form($client_transaction_id) 
+     {
+         $this->load->view("dashboards/partial_pages/action_form", array("client_id" => $client_transaction_id));
+     }
 
 }

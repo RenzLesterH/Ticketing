@@ -1,3 +1,12 @@
+<?php
+	$user_level="";
+	if($this->session->userdata('user_level') === "1"){
+		$user_level = "Staff 1";
+	}else if($this->session->userdata('user_level') === "2"){
+		$user_level = "Staff 2";
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +27,7 @@
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-	<title>Staff 1 Dashboard</title>
+	<title><?= $user_level ?> Dashboard</title>
 
 	<link href="<?= base_url(); ?>assets/admin/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -89,14 +98,14 @@
 								Transactions</span>
 						</a>
 					</li>
-
+					<?php if($this->session->userdata('user_level') === "1"){ ?>
 					<li class="sidebar-item navigation_link" id="add_form_link">
 						<a class="sidebar-link" href="load/2" id="add_form">
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Add Client
 								Transaction</span>
 						</a>
 					</li>
-
+					<?php } ?>
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="<?= base_url(); ?>logout">
 							<i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Log-out</span>
@@ -116,7 +125,7 @@
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item">
-							Staff 1
+							<?=$user_level?>
 						</li>
 					</ul>
 				</div>
@@ -125,7 +134,7 @@
 			<main id="dashboard_analytics" class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Staff 1 Dashboard</h1>
+					<h1 class="h3 mb-3"><?=$user_level?> Dashboard</h1>
 
 					<div class="row">
 

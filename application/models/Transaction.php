@@ -5,7 +5,9 @@ class Transaction extends CI_Model
     /* This function returns all the client transaction detail from the database. */
     function get_all_transaction()
     {
-        return $this->db->query(
+        $view_transaction_by_user_level = "";
+        if($this->session->userdata('user_level') === "1"){
+            $view_transaction_by_user_level = 
             "SELECT 
                 client.*,
                 transaction.transaction_code,
@@ -17,8 +19,25 @@ class Transaction extends CI_Model
             LEFT JOIN
                 transaction ON client.id = transaction.client_id
             WHERE
-                transaction.progress = 'On Going' OR transaction.progress = 'Pending'"
-        )->result_array();
+                transaction.progress = 'On Going' OR transaction.progress = 'Pending'";
+
+        }else if($this->session->userdata('user_level') === "2"){
+            $view_transaction_by_user_level = 
+            "SELECT 
+                client.*,
+                transaction.transaction_code,
+                transaction.transaction,
+                transaction.progress,
+                transaction.received_at
+            FROM
+                client
+            LEFT JOIN
+                transaction ON client.id = transaction.client_id
+            WHERE
+                transaction.progress = 'On Going'";
+        }
+
+        return $this->db->query($view_transaction_by_user_level)->result_array();
     }
 
     function get_client_transaction_by_id($id)
@@ -163,6 +182,20 @@ class Transaction extends CI_Model
         return 'Client transaction no. '. $code_no->transaction_code .' of '.$transaction_data['firstname']." ".$transaction_data['middlename']." ".$transaction_data['lastname']. ' is updated successfully!';
     }
 
+
+    function update_client_transaction_progress_by_id($transaction_data)
+    {
+        $query = "UPDATE transaction SET progress = ?, prepared_at = ? WHERE transaction_id = ?;";
+        $prepared_at_details = [$this->security->xss_clean($transaction_data['prepared_by']), date("Y-m-d, H:i:s")];
+        $values = array(
+            "Prepared",
+            json_encode($prepared_at_details),
+            $this->security->xss_clean($transaction_data['prepare_client_form_id']),
+        );
+        $this->db->query($query, $values);
+        $code_no = $this->db->query('SELECT transaction_code AS `transaction_code` FROM transaction WHERE client_id='.$transaction_data["prepare_client_form_id"].'')->row(); 
+        return 'Client transaction no. '. $code_no->transaction_code . ' is prepared successfully!';
+    }
     // /* This function handles the deleting of specific product in the database by using the product id. */
     // function remove_product_by_id($id)
     // {
