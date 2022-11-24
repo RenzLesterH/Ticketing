@@ -1,6 +1,18 @@
 <?php
 class Transaction extends CI_Model
 {
+    function count_analtics($progress)
+    {
+        $query = 
+            "SELECT 
+                *
+            FROM
+                transaction
+            WHERE
+                progress = ?;";
+                
+        return $this->db->query($query, $progress)->num_rows(); 
+    }
 
     /* This function returns all the client transaction detail from the database. */
     function get_all_transaction()

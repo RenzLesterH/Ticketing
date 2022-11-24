@@ -158,7 +158,7 @@
 													</div>
 												</div>
 											</div>
-											<h1 class="mt-1 mb-3">100</h1>
+											<h1 class="mt-1 mb-3"><?= $total_recieved ?></h1>
 										</div>
 									</div>
 								</div>
@@ -177,7 +177,7 @@
 													</div>
 												</div>
 											</div>
-											<h1 class="mt-1 mb-3">10</h1>
+											<h1 class="mt-1 mb-3"><?= $total_prepared ?></h1>
 										</div>
 									</div>
 								</div>
@@ -196,7 +196,7 @@
 													</div>
 												</div>
 											</div>
-											<h1 class="mt-1 mb-3">11</h1>
+											<h1 class="mt-1 mb-3"><?= $total_verified ?></h1>
 										</div>
 									</div>
 								</div>
@@ -215,7 +215,7 @@
 													</div>
 												</div>
 											</div>
-											<h1 class="mt-1 mb-3">30</h1>
+											<h1 class="mt-1 mb-3"><?=$total_successfull?></h1>
 										</div>
 									</div>
 								</div>
@@ -257,15 +257,15 @@
 											<tbody>
 												<tr>
 													<td>Successfull</td>
-													<td class="text-end">4306</td>
+													<td class="text-end"><?=$total_successfull?></td>
 												</tr>
 												<tr>
-													<td>In Progress</td>
-													<td class="text-end">3801</td>
+													<td>On Progress</td>
+													<td class="text-end"><?=$total_recieved?></td>
 												</tr>
 												<tr>
-													<td>Cancelled</td>
-													<td class="text-end">1689</td>
+													<td>Pending</td>
+													<td class="text-end"><?=$total_pending?></td>
 												</tr>
 											</tbody>
 										</table>
@@ -373,16 +373,19 @@
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			// Pie chart
+			var total_successfull = <?= $total_successfull ?>;
+			var total_on_progress = <?= $total_recieved ?>;
+			var total_pending = <?= $total_pending ?>;
 			new Chart(document.getElementById("chartjs-dashboard-pie"), {
 				type: "pie",
 				data: {
-					labels: ["Successfull", "In Progress", "Cancelled"],
+					labels: ["Successfull", "On Progress", "Pending"],
 					datasets: [{
-						data: [4306, 3801, 1689],
+						data: [total_successfull, total_on_progress, total_pending],
 						backgroundColor: [
-							window.theme.primary,
-							window.theme.warning,
-							window.theme.danger
+							window.theme.success,
+							window.theme.secondary,
+							window.theme.warning
 						],
 						borderWidth: 5
 					}]
