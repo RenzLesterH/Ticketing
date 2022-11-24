@@ -21,6 +21,11 @@ class Transaction extends CI_Model
             $transaction_status = "transaction.prepared_at";
             $where_query = "transaction.progress = 'Prepared'";
 
+        }else if ($this->session->userdata('user_level') === "4") {
+
+            $transaction_status = "transaction.verified_at";
+            $where_query = "transaction.progress = 'Verified'";
+
         }
 
         $view_transaction_by_user_level = 
@@ -129,13 +134,6 @@ class Transaction extends CI_Model
         $this->db->query($transaction_query, $transaction_values);
     }
 
-    // /* This function returns a specific product from the database using the product id. */
-    // function get_products_by_id($id)
-    // {
-    //     $query = "SELECT * FROM products WHERE id = ?";
-    //     return $this->db->query($query, $id)->result_array();
-    // }
-
     /* This function handles the updating of products in the database and returns the product id back. */
     function update_client_transaction_by_id($transaction_data)
     {
@@ -189,14 +187,21 @@ class Transaction extends CI_Model
             $status_progess = "Prepared";
             $status_type = "prepared_at";
             $updated_response = "prepared";
+            $updated_by = $transaction_data['updated_by'];
         }else if ($this->session->userdata('user_level') === "3") {
             $status_progess = "Verified";
             $status_type = "verified_at";
             $updated_response = "verified";
+            $updated_by = $transaction_data['updated_by'];
+        }else if ($this->session->userdata('user_level') === "4") {
+            $status_progess = "Approved";
+            $status_type = "approve_at";
+            $updated_response = "approve";
+            $updated_by = "Loren May";
         }
 
         $query = "UPDATE transaction SET progress = ?, {$status_type} = ? WHERE transaction_id = ?;";
-        $updated_status_details = [$this->security->xss_clean($transaction_data['updated_by']), date("Y-m-d, H:i:s")]; 
+        $updated_status_details = [$this->security->xss_clean($updated_by), date("Y-m-d, H:i:s")]; 
         $values = array(
             $status_progess,
             json_encode($updated_status_details),

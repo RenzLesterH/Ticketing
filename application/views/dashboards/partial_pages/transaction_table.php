@@ -8,6 +8,10 @@
         $transaction_status = "Prepared";
         $action_form_modal = "for_verify";
         $transaction_status_modal_header = "Verify";
+    }else if ($this->session->userdata('user_level') === "4") {
+        $transaction_status = "Verified";
+        $action_form_modal = "for_approval";
+        $transaction_status_modal_header = "Approve";
     }
 ?>
 
@@ -40,6 +44,8 @@
                             $transaction_status_at = json_decode($client_transaction['received_at']); //convert to readable format.
                         }else if ($this->session->userdata('user_level') === "3") {
                             $transaction_status_at = json_decode($client_transaction['prepared_at']);
+                        }else if ($this->session->userdata('user_level') === "4") {
+                            $transaction_status_at = json_decode($client_transaction['verified_at']);
                         }
                     ?>
                         <tr>
@@ -51,12 +57,14 @@
 
                             <td> 
                             <?php if ($client_transaction['progress'] === "On Going" && $this->session->userdata('user_level') === "1") { ?>  
-                                <span class="badge bg-primary"><?= $client_transaction['progress'] ?></span>
+                                <span class="badge bg-secondary"><?= $client_transaction['progress'] ?></span>
                             <?php }else if ($client_transaction['progress'] === "Pending" && $this->session->userdata('user_level') === "1"){ ?>
                                 <span class="badge bg-warning"><?= $client_transaction['progress'] ?></span>
                             <?php }else if ($client_transaction['progress'] === "On Going" && $this->session->userdata('user_level') === "2"){ ?>
-                                <span class="badge bg-primary"><?= $client_transaction['progress'] ?></span>
+                                <span class="badge bg-secondary"><?= $client_transaction['progress'] ?></span>
                             <?php }else if ($client_transaction['progress'] === "Prepared" && $this->session->userdata('user_level') === "3"){ ?>
+                                <span class="badge bg-primary"><?= $client_transaction['progress'] ?></span>
+                            <?php }else if ($client_transaction['progress'] === "Verified" && $this->session->userdata('user_level') === "4"){ ?>
                                 <span class="badge bg-info"><?= $client_transaction['progress'] ?></span>
                             <?php } ?>
                             </td>
@@ -78,7 +86,12 @@
                                 <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
                                     Verify now
                                 </button>
+                            <?php }else if ($this->session->userdata('user_level') === "4"){ ?>
+                                <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
+                                    Approve now
+                                </button>
                             <?php } ?>
+                            
                             </td>
 
                         </tr>

@@ -4,6 +4,9 @@
     if ($this->session->userdata('user_level') === "3") {
         $transaction_status_label = "Verified by:";
         $transaction_status_button = "Verify now";
+    }else if ($this->session->userdata('user_level') === "4") {
+        $transaction_status_label = "Approved by:";
+        $transaction_status_button = "Approve now";
     }
 ?>
 <div class="modal-header">
@@ -15,7 +18,11 @@
     <input type="hidden" value="<?= $client_id ?>" name="client_form_id">
     <div class="modal-body ps-4 pe-4">
         <label for="input" class="form-label"><?= $transaction_status_label ?></label>
-        <input type="text" class="form-control p-1" name="updated_by" required>
+        <?php if ($this->session->userdata('user_level') === "4") { ?>
+            <input type="text" class="form-control p-1" name="updated_by" value="Loren May" disabled>
+        <?php }else{ ?>
+            <input type="text" class="form-control p-1" name="updated_by" required>
+        <?php }?>
     </div>  
     <div class="modal-footer border-top-0">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
