@@ -14,7 +14,7 @@ class Dashboard extends CI_Controller {
     /* This function redirect user to the dashboard. */  
 	public function index()
 	{   
-        $user_level = $this->session->userdata('user_level');
+        $this->session->userdata('user_level');
         $this->load->view('dashboards/dashboard');     		
 	}
 
@@ -67,7 +67,7 @@ class Dashboard extends CI_Controller {
     }
 
      /* This function handles the validation and adding new product in database.  */
-     public function prepare_client_transaction_process()
+     public function update_client_transaction_progress()
      {
          $form_data = $this->input->post();
          $response = $this->Transaction->update_client_transaction_progress_by_id($form_data);

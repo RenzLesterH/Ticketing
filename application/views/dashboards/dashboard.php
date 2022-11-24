@@ -4,6 +4,8 @@
 		$user_level = "Staff 1";
 	}else if($this->session->userdata('user_level') === "2"){
 		$user_level = "Staff 2";
+	}else if($this->session->userdata('user_level') === "3"){
+		$user_level = "Staff 3";
 	}
 ?>
 

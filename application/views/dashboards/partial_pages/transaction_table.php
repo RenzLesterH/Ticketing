@@ -1,14 +1,21 @@
 <?php
     $action_form_modal = "";
+    $transaction_status = "Reveived";
+    $transaction_status_modal_header = "Prepare";
     if ($this->session->userdata('user_level') === "2") {
         $action_form_modal = "for_prepare";
+    }else if ($this->session->userdata('user_level') === "3") {
+        $transaction_status = "Prepared";
+        $action_form_modal = "for_verify";
+        $transaction_status_modal_header = "Verify";
     }
 ?>
+
 <h1 class="h3 mb-3">Client Transactions</h1>
 <?php if (!empty($this->session->flashdata('success'))) { ?>
     <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
         <i class="fa-solid fa-circle-check"></i> <?= $this->session->flashdata('success'); ?>
-        <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button> 
     </div>
 <?php } ?>
 <div class="col-15 col-lg-12 col-xxl-13 d-flex mx-auto">
@@ -22,19 +29,26 @@
                         <th>Transaction No.</th>
                         <th>Transaction Type</th>
                         <th>Status</th>
-                        <th>Reveived by</th>
-                        <th>Reveived date</th>
+                        <th><?=$transaction_status?> by</th>
+                        <th><?=$transaction_status?> date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($client_transactions as $client_transaction) {
-                        $received_at = json_decode($client_transaction['received_at']); //convert to readable format.
+                        if ($this->session->userdata('user_level') === "1" || $this->session->userdata('user_level') === "2") {
+                            $transaction_status_at = json_decode($client_transaction['received_at']); //convert to readable format.
+                        }else if ($this->session->userdata('user_level') === "3") {
+                            $transaction_status_at = json_decode($client_transaction['prepared_at']);
+                        }
                     ?>
                         <tr>
                             <td><?= $client_transaction['firstname'] . " " . $client_transaction['middlename'] . " " . $client_transaction['lastname']  ?></td>
+
                             <td><?= $client_transaction['transaction_code'] ?></td>
+
                             <td><?= $client_transaction['transaction'] ?></td>
+
                             <td> 
                             <?php if ($client_transaction['progress'] === "On Going" && $this->session->userdata('user_level') === "1") { ?>  
                                 <span class="badge bg-primary"><?= $client_transaction['progress'] ?></span>
@@ -42,21 +56,31 @@
                                 <span class="badge bg-warning"><?= $client_transaction['progress'] ?></span>
                             <?php }else if ($client_transaction['progress'] === "On Going" && $this->session->userdata('user_level') === "2"){ ?>
                                 <span class="badge bg-primary"><?= $client_transaction['progress'] ?></span>
+                            <?php }else if ($client_transaction['progress'] === "Prepared" && $this->session->userdata('user_level') === "3"){ ?>
+                                <span class="badge bg-info"><?= $client_transaction['progress'] ?></span>
                             <?php } ?>
                             </td>
-                            <td><?= $received_at[0] ?></td>
-                            <td><?= date("F j, Y", strtotime($received_at[1])); ?></td>
+
+                            <td><?= $transaction_status_at[0] ?></td>
+
+                            <td><?= date("F j, Y", strtotime($transaction_status_at[1])); ?></td>
+
                             <td>
                             <?php if ($this->session->userdata('user_level') === "1") { ?>  
                                 <button type="button" class="btn btn-outline-info edit_transaction" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#view_client_modal">
                                     View more
                                 </button>
                             <?php }else if ($this->session->userdata('user_level') === "2"){ ?>
-                                <button type="button" class="btn btn-outline-info prepare_transaction" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
+                                <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
                                     Prepare now
+                                </button>
+                            <?php }else if ($this->session->userdata('user_level') === "3"){ ?>
+                                <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
+                                    Verify now
                                 </button>
                             <?php } ?>
                             </td>
+
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -81,8 +105,6 @@
         </div>
     </div>
     </div>
-
-
 
     </div>
 
@@ -128,16 +150,16 @@
                 return false;
             });
 
-            $(document).on('click', 'button.prepare_transaction', function() {
-                let prepared_id = $(this).attr('id');
-                $.get("view_action_form/" + prepared_id, function(res) {
+            $(document).on('click', 'button.client_form_transaction_button', function() {
+                let client_form_transaction_id = $(this).attr('id');
+                $.get("view_action_form/" + client_form_transaction_id, function(res) {
                     $('#action_form').html(res);
-                    $('#client_form_modal').text("Prepare client transaction no. "+prepared_id);
+                    $('#client_form_modal').text("<?=$transaction_status_modal_header?> client transaction no. "+client_form_transaction_id);
                 });
             }); 
 
-            $(document).on('click', 'button.submit_prepared_form', function() {
-                let form = $("form#prepare_client_form");
+            $(document).on('click', 'button.submit_client_transaction_form', function() {
+                let form = $("form#update_client_status");
 				$.post(form.attr('action'), form.serialize(), function(res) {
                     $( ".btn-close" ).trigger( "click" );
 					$('#load_page').html(res);
