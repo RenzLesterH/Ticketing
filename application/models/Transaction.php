@@ -5,52 +5,36 @@ class Transaction extends CI_Model
     /* This function returns all the client transaction detail from the database. */
     function get_all_transaction()
     {
-        $view_transaction_by_user_level = "";
-        if($this->session->userdata('user_level') === "1"){
-            $view_transaction_by_user_level = 
-            "SELECT 
-                client.*,
-                transaction.transaction_code,
-                transaction.transaction,
-                transaction.progress,
-                transaction.received_at
-            FROM
-                client
-            LEFT JOIN
-                transaction ON client.id = transaction.client_id
-            WHERE
-                transaction.progress = 'On Going' OR transaction.progress = 'Pending'";
 
-        }else if($this->session->userdata('user_level') === "2"){
-            $view_transaction_by_user_level = 
-            "SELECT 
-                client.*,
-                transaction.transaction_code,
-                transaction.transaction,
-                transaction.progress,
-                transaction.received_at
-            FROM
-                client
-            LEFT JOIN
-                transaction ON client.id = transaction.client_id
-            WHERE
-                transaction.progress = 'On Going'";
+        if ($this->session->userdata('user_level') === "1") {
+            
+            $transaction_status = "transaction.received_at";
+            $where_query = "transaction.progress = 'On Going' OR transaction.progress = 'Pending'";
 
-        }else if($this->session->userdata('user_level') === "3"){
-            $view_transaction_by_user_level = 
-            "SELECT 
-                client.*,
-                transaction.transaction_code,
-                transaction.transaction,
-                transaction.progress,
-                transaction.prepared_at
-            FROM
-                client
-            LEFT JOIN
-                transaction ON client.id = transaction.client_id
-            WHERE
-                transaction.progress = 'Prepared'";
+        }else if ($this->session->userdata('user_level') === "2") {
+
+            $transaction_status = "transaction.received_at";
+            $where_query = "transaction.progress = 'On Going'";
+
+        }else if ($this->session->userdata('user_level') === "3") {
+
+            $transaction_status = "transaction.prepared_at";
+            $where_query = "transaction.progress = 'Prepared'";
+
         }
+
+        $view_transaction_by_user_level = 
+        "SELECT 
+            client.*,
+            transaction.transaction_code,
+            transaction.transaction,
+            transaction.progress,
+            {$transaction_status}
+        FROM
+            client
+        LEFT JOIN
+            transaction ON client.id = transaction.client_id
+        WHERE {$where_query}";
 
         return $this->db->query($view_transaction_by_user_level)->result_array();
     }
