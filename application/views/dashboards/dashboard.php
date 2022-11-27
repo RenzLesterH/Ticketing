@@ -154,7 +154,7 @@
 
 												<div class="col-auto">
 													<div class="stat text-primary">
-														<i class="align-middle" data-feather="truck"></i>
+														<i class="align-middle" data-feather="plus"></i>
 													</div>
 												</div>
 											</div>
@@ -173,7 +173,7 @@
 
 												<div class="col-auto">
 													<div class="stat text-primary">
-														<i class="align-middle" data-feather="truck"></i>
+														<i class="align-middle" data-feather="user-plus"></i>
 													</div>
 												</div>
 											</div>
@@ -187,12 +187,12 @@
 										<div class="card-body">
 											<div class="row">
 												<div class="col mt-0">
-													<h5 class="card-title">Verified</h5>
+													<h5 class="card-title">Verified</h5> 
 												</div>
 
 												<div class="col-auto">
 													<div class="stat text-primary">
-														<i class="align-middle" data-feather="dollar-sign"></i>
+														<i class="align-middle" data-feather="user-check"></i> 
 													</div>
 												</div>
 											</div>
