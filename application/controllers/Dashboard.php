@@ -15,11 +15,11 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{   
         $this->session->userdata('user_level');
-        $total_recieved = $this->Transaction->count_analtics("On Going");
-        $total_pending = $this->Transaction->count_analtics("Pending");
-        $total_prepared = $this->Transaction->count_analtics("Prepared");
-        $total_verified = $this->Transaction->count_analtics("Verified");
-        $total_successfull = $this->Transaction->count_analtics("Approved");
+        $total_recieved = $this->Transaction->count_analytics("On Going");
+        $total_pending = $this->Transaction->count_analytics("Pending"); 
+        $total_prepared = $this->Transaction->count_analytics("Prepared");
+        $total_verified = $this->Transaction->count_analytics("Verified");
+        $total_successfull = $this->Transaction->count_analytics("Approved");
         $this->load->view('dashboards/dashboard', array("total_recieved" => $total_recieved, 
                                                         "total_prepared" => $total_prepared, 
                                                         "total_verified" => $total_verified,

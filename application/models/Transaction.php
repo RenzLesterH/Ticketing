@@ -1,7 +1,7 @@
 <?php
 class Transaction extends CI_Model
 {
-    function count_analtics($progress)
+    function count_analytics($progress)
     {
         $query = 
             "SELECT 
