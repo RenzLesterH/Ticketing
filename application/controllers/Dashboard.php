@@ -14,18 +14,35 @@ class Dashboard extends CI_Controller {
     /* This function redirect user to the dashboard. */  
 	public function index()
 	{   
-        $this->session->userdata('user_level');
-        $total_recieved = $this->Transaction->count_analytics("On Going");
-        $total_pending = $this->Transaction->count_analytics("Pending"); 
-        $total_prepared = $this->Transaction->count_analytics("Prepared");
-        $total_verified = $this->Transaction->count_analytics("Verified");
-        $total_successfull = $this->Transaction->count_analytics("Approved");
-        $this->load->view('dashboards/dashboard', array("total_recieved" => $total_recieved, 
-                                                        "total_prepared" => $total_prepared, 
-                                                        "total_verified" => $total_verified,
-                                                        "total_successfull" => $total_successfull,
-                                                        "total_pending" => $total_pending
-                                                        ));     		
+    
+        if(!$this->session->userdata('user_level')) { 
+            $this->load->view('index');   
+        } 
+        else {
+            $total_recieved = $this->Transaction->count_analytics("On Going");
+            $total_pending = $this->Transaction->count_analytics("Pending"); 
+            $total_prepared = $this->Transaction->count_analytics("Prepared");
+            $total_verified = $this->Transaction->count_analytics("Verified");
+            $total_successfull = $this->Transaction->count_analytics("Approved");
+            $this->load->view('dashboards/dashboard', array("total_recieved" => $total_recieved, 
+                                                            "total_prepared" => $total_prepared, 
+                                                            "total_verified" => $total_verified,
+                                                            "total_successfull" => $total_successfull,
+                                                            "total_pending" => $total_pending
+                                                        ));
+        }     		
+	}
+
+    public function validate_login()
+	{
+		$current_user_id = $this->session->userdata('user_id');	
+        
+        if(!$current_user_id) { 
+            $this->load->view('index');
+        } 
+        else {
+            $this->load->view('dashboards/dashboard'); 
+        }
 	}
 
     public function load_partial_pages($page)
