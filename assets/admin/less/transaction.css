@@ -1,0 +1,58 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+body header {
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 10px;
+}
+body header h1,
+body header h2 {
+  font-weight: normal;
+  font-size: 22px;
+  text-align: center;
+  margin: 0px;
+}
+body section div {
+  width: 335px;
+  float: left;
+  margin-top: 15px;
+}
+body section div h3 {
+  margin: 0px;
+}
+body section div#received_info {
+  margin-top: 0px;
+  text-align: right;
+}
+body section table {
+  margin: 20px 0px;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+body section table td {
+  border: 1px solid #ddd;
+  padding: 4px;
+}
+body main {
+  margin-top: 50px;
+  border-top: 1px dashed black;
+  border-bottom: 1px dashed black;
+  padding: 15px 0px 20px 0px;
+}
+body main h3 {
+  font-weight: normal;
+  font-size: 20px;
+  text-align: center;
+  margin: 0px;
+}
+body main div {
+  margin-top: 10px;
+  width: 335px;
+  float: left;
+}
+body main div#info_2 {
+  margin-top: 0px;
+  text-align: right;
+}

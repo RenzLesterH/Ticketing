@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require FCPATH. 'vendor/autoload.php';
+
 class Dashboard extends CI_Controller {
 
     /* This constructor function load the model Dashboard, Transaction
@@ -105,6 +107,20 @@ class Dashboard extends CI_Controller {
      public function view_action_form($client_transaction_id) 
      {
          $this->load->view("dashboards/partial_pages/action_form", array("client_id" => $client_transaction_id));
+     }
+
+     public function print_transaction()
+     {
+        $transaction = $this->load->view("dashboards/partial_pages/transaction_pdf","", true);
+        $stylesheet = file_get_contents('assets/admin/css/transaction.css'); 
+        
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_top' => 10,
+        ]);
+        $mpdf->WriteHTML($stylesheet,1);
+        $mpdf->WriteHTML($transaction);
+        $mpdf->Output(); 
      }
 
 }
