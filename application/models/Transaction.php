@@ -132,15 +132,16 @@ class Transaction extends CI_Model
         /* Insert details in transaction table. */
         $transaction_query = 
             "INSERT INTO transaction 
-                (client_id, transaction_code, transaction, progress, has_requirements, received_at) 
-            VALUES (?,?,?,?,?,?)";
+                (client_id, transaction_code, transaction, progress, has_requirements, received_at, created_at) 
+            VALUES (?,?,?,?,?,?,?)"; 
         $transaction_values = array(
             $insert_client_id,
             $transaction_code,
             $this->security->xss_clean($transaction['trasaction']),
             $progress,
             $has_requirements,
-            json_encode($received_at_details)
+            json_encode($received_at_details),
+            date("Y-m-d, H:i:s")
         );
         
         $this->db->query($transaction_query, $transaction_values);
