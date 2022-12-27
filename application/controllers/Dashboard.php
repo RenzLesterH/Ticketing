@@ -109,14 +109,15 @@ class Dashboard extends CI_Controller {
          $this->load->view("dashboards/partial_pages/action_form", array("client_id" => $client_transaction_id));
      }
 
-     public function print_transaction()
+     public function print_transaction($client_transaction_id)
      {
-        $transaction = $this->load->view("dashboards/partial_pages/transaction_pdf","", true);
+        $data["client_transaction"] = $this->Transaction->get_client_transaction_by_id($client_transaction_id);
+        $transaction = $this->load->view("dashboards/partial_pages/transaction_pdf", $data, true);
         $stylesheet = file_get_contents('assets/admin/css/transaction.css'); 
         
         $mpdf = new \Mpdf\Mpdf([
             'format' => 'A4',
-            'margin_top' => 10,
+            'margin_top' => 3,
         ]);
         $mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($transaction);

@@ -78,6 +78,9 @@
                                 <button type="button" class="btn btn-outline-info edit_transaction" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#view_client_modal">
                                     View more
                                 </button>
+                                <button type="button" class="btn btn-outline-primary print_transaction" id="<?= $client_transaction['id'] ?>">
+                                    Print
+                                </button>
                             <?php }else if ($this->session->userdata('user_level') === "2"){ ?>
                                 <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
                                     Prepare now
@@ -120,6 +123,8 @@
     </div>
 
     </div>
+
+<!-- ===================================================================JQUery=================================================================================================================== -->
 
     <script>
         $(document).ready(function() {
@@ -178,7 +183,16 @@
 					$('#load_page').html(res);
 				});
                 return false;
-            }); 
+            });
+            
+            $(document).on('click', 'button.print_transaction', function() {
+                let client_transaction_id = $(this).attr('id');
+                $.get("print_transaction/" + client_transaction_id, function(res) {
+                    window.open("http://localhost/Ticketing/print_transaction/"+client_transaction_id);
+                    // $('#action_form').html(res);
+                    // $('#client_form_modal').text("<?=$transaction_status_modal_header?> client transaction no. "+client_form_transaction_id);
+                });
+            });
 
         });
     </script>

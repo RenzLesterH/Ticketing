@@ -59,6 +59,6 @@ $route['load/(:any)'] = 'dashboard/load_partial_pages/$1';
 $route['update_transaction/validate'] = 'dashboard/update_transaction_process';
 $route['client_transaction/validate'] = 'dashboard/update_client_transaction_progress';
 $route['view_action_form/(:any)'] = 'dashboard/view_action_form/$1';
-$route['print_transaction'] = 'dashboard/print_transaction'; 
+$route['print_transaction/(:any)'] = 'dashboard/print_transaction/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE; 

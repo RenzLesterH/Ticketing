@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction</title>
+    <title>Transaction No. <?= $client_transaction[0]['transaction_code'] ?></title>
 </head>
 <body>
+    <?php
+        $client_name = $client_transaction[0]['firstname'] . " " . $client_transaction[0]['middlename'] . " " . $client_transaction[0]['lastname'];
+        $received_by = json_decode($client_transaction[0]['received_at']);
+        $transaction_status_at = json_decode($client_transaction[0]['received_at']);
+    ?>
     <header>
         <h1>Office of the Municipal Assesors</h1>
         <h2>Municipality of Tagudin</h2>
@@ -14,52 +19,50 @@
     <section>
         <div id="trasaction_info">
             <h3>Transaction by:</h3>
-            <label>Name: Juan Dela Cruz</label>
-            <br><label>Transaction Monitoring form No: </label>001
-            <br><label>Contact Number: </label>091717171
+            <label>Name: <?= $client_name  ?></label>
+            <br><label>Transaction Monitoring form No: <b><?= $client_transaction[0]['transaction_code'] ?></b></label>
+            <br><label>Contact Number: <?= $client_transaction[0]['contacts'] ?></label>
         </div>
         <div id="received_info">
             <h3>Received Info</h3>
-            <label>For Approval: </label>YES
-            <br><label>Date: </label>Dec. 01, 2022
-            <br><label>Claim by: </label>Mark Joseph
-            <br><label>Date: </label>Dec. 03, 2022
+            <label>For Approval: <input type="checkbox"></label> 
+            <br><label>Date: </label>
+            <br><label>Claim by: </label>
+            <br><label>Date: </label>
         </div>
         <table> 
             <tbody>
                 <tr>
-                    <td>Received by:</td>
-                    <td>Uriel Estal</td>
+                    <td style="width: 150px;">Received</td>
                     <td>Date:</td>
-                    <td>December 05, 2022</td>
+                    <td style="border: none; width: 20px;"></td>
+                    <td style="padding-top: 0px;">Lacking/Corrective Action:</td>
                 </tr>
                 <tr>
-                    <td>Prepared by:</td>
-                    <td>Marj Joseph</td>
+                    <td style="width: 150px;">Prepared</td>
                     <td>Date:</td>
-                    <td>December 15, 2022</td>
+                    <td style="border: none; width: 20px;"></td>
+                    <td></td>
                 </tr>
                 <tr>
-                    <td>Verified by:</td>
-                    <td>Mark Uriel Angelo Joseph</td>
+                    <td style="width: 150px;">Verified</td>
                     <td>Date:</td>
-                    <td>December 21, 2022</td>
+                    <td style="border: none; width: 20px;"></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
-        <label>Lacking/Corrective Action:</label>
     </section>
     <main>
         <h3>Office of the Municipal Assesors - Tagudin</h3>
-        <hr>
         <div>
-            <label>Date: Dec. 01, 2022</label>
-            <br><label>Transaction No: </label>001
-            <br><label>Name: Juan Dela Cruz</label>
+            <label>Date: <?= date("F j, Y", strtotime($transaction_status_at[1])); ?></label>
+            <br><label>Transaction No: <b><?= $client_transaction[0]['transaction_code'] ?></b></label>
+            <br><label>Name: <?= $client_name  ?></label>
         </div>
         <div id="info_2"> 
-            <label>Transaction: </label>Land Something...
-            <br><label>Received by: </label>Mark Joseph
+            <label>Transaction: <?= $client_transaction[0]['transaction'] ?> </label>
+            <br><label>Received by: <?= $received_by[0] ?></label>
         </div>
     </main>
 </body>

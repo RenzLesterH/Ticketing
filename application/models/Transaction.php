@@ -62,6 +62,7 @@ class Transaction extends CI_Model
             "SELECT 
                 client.*,
                 transaction.transaction,
+                transaction.transaction_code,
                 transaction.progress,
                 transaction.has_requirements,
                 transaction.received_at
