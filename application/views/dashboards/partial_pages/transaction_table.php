@@ -58,6 +58,8 @@
                             <td> 
                             <?php if ($client_transaction['progress'] === "On Going" && $this->session->userdata('user_level') === "1") { ?>  
                                 <span class="badge bg-secondary"><?= $client_transaction['progress'] ?></span>
+                            <?php }else if ($client_transaction['progress'] === "Approved" && $this->session->userdata('user_level') === "1"){ ?>
+                                <span class="badge bg-success"><?= $client_transaction['progress'] ?></span>
                             <?php }else if ($client_transaction['progress'] === "Pending" && $this->session->userdata('user_level') === "1"){ ?>
                                 <span class="badge bg-warning"><?= $client_transaction['progress'] ?></span>
                             <?php }else if ($client_transaction['progress'] === "On Going" && $this->session->userdata('user_level') === "2"){ ?>
@@ -79,7 +81,11 @@
                                     View more
                                 </button>
                                 <button type="button" class="btn btn-outline-primary print_transaction" id="<?= $client_transaction['id'] ?>">
+                                <?php if ($client_transaction['progress'] === "Approved" && $this->session->userdata('user_level') === "1"){ ?>
+                                    Re-Print
+                                <?php }else{ ?>
                                     Print
+                                <?php } ?>
                                 </button>
                             <?php }else if ($this->session->userdata('user_level') === "2"){ ?>
                                 <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
@@ -109,6 +115,29 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content" id="view_client_transaction_form">
                 <!-- Load Form -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="confirm_edit_transaction" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header border-0">
+                <h4 class="modal-title" id="staticBackdropLabel">Confirm Changes</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning mb-0" role="alert">
+                    <h4 class="alert-heading"><i class="fa-solid fa-circle-exclamation"></i>  Save Changes?</h4>
+                    <p id="confirm_message">
+                        <!-- Confirmation Message Here -->
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success update_transaction">Update Transaction</button>
+            </div>
             </div>
         </div>
     </div>
@@ -160,12 +189,24 @@
             });
 
             $(document).on('click', '.save_button', function() {
-                let form = $("form#edit_form_transaction");
-				$.post(form.attr('action'), form.serialize(), function(res) {
-                    $( ".btn-close" ).trigger( "click" );
-					$('#load_page').html(res);
-				});
+                let progress = $("#transacion_progress").val();
+                $( "#view_client_modal .btn-close" ).trigger( "click" );
+                $('#confirm_edit_transaction').modal('show');
+                if( progress === "Approved"){
+                    $("#confirm_message").text("Saving Changes with the already approved client transaction will delete the previous transaction history, and it is not retrievable.");
+                }   
+                else{
+                    $("#confirm_message").text("Do you want to update this transaction?");
+                }
                 return false;
+            });
+
+            $(document).on('click', '.update_transaction', function() {
+                let form = $("form#edit_form_transaction");
+                $.post(form.attr('action'), form.serialize(), function(res) {
+                    $('#load_page').html(res);
+                });
+                $( "#confirm_edit_transaction .btn-close" ).trigger( "click" );
             });
 
             $(document).on('click', 'button.client_form_transaction_button', function() {
@@ -189,8 +230,6 @@
                 let client_transaction_id = $(this).attr('id');
                 $.get("print_transaction/" + client_transaction_id, function(res) {
                     window.open("http://localhost/Ticketing/print_transaction/"+client_transaction_id);
-                    // $('#action_form').html(res);
-                    // $('#client_form_modal').text("<?=$transaction_status_modal_header?> client transaction no. "+client_form_transaction_id);
                 });
             });
 

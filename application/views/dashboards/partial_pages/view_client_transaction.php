@@ -9,11 +9,14 @@
           <i class="fa-solid fa-circle-exclamation"></i> Inputs are disabled. Please click <strong>Edit</strong> Button to edit details.
       </div>
       <?php
-            $received_by = json_decode($client_transaction[0]['received_at']);
+            $received_at = json_decode($client_transaction[0]['received_at']);
       ?>
-      <h4 class="mb-4 text-muted">Recieved by: <?= $received_by[0] ?></h4>
+      <?php if($client_transaction[0]['progress'] !== "Approved"){ ?>
+      <h4 class="mb-4 text-muted">Recieved by: <?= $received_at[0] ?></h4>
+      <?php } ?>
       <form class="row g-3" autocomplete="off" method="post" action="<?= base_url(); ?>update_transaction/validate" id="edit_form_transaction">
           <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
+          <input type="hidden" value="<?= $client_transaction[0]['progress'] ?>" id="transacion_progress">
           <input type="text" name="id" value="<?= $client_transaction[0]['id'] ?>" hidden>
           <div class="col-md-4">
               <label for="input" class="form-label">First name</label>
@@ -59,10 +62,39 @@
                       Check if client has all the requirements.
                   </span>
           </div>
+          <?php if($client_transaction[0]['progress'] === "Approved"){
+                $prepared_at = json_decode($client_transaction[0]['prepared_at']);
+                $verified_at = json_decode($client_transaction[0]['verified_at']);
+                $approve_at = json_decode($client_transaction[0]['approve_at']);
+          ?>
+          <div class="col-md-12">
+                <h4>Transaction History</h4>
+                <table class="table table-bordered mt-3">
+                    <tbody>
+                    <tr>
+                        <td>Received by: <?= $received_at[0] ?></td>
+                        <td>Date: <?= date("F j, Y", strtotime($received_at[1])) ?></td>
+                    </tr>
+                    <tr>
+                        <td>Prepared by: <?= $prepared_at[0] ?></td>
+                        <td>Date: <?= date("F j, Y", strtotime($prepared_at[1])) ?></td>
+                    </tr>
+                    <tr>
+                        <td>Verified by: <?= $verified_at[0] ?></td>
+                        <td>Date: <?= date("F j, Y", strtotime($verified_at[1])) ?></td>
+                    </tr>
+                    <tr>
+                        <td>Approved by: <?= $approve_at[0] ?></td>
+                        <td>Date: <?= date("F j, Y", strtotime($approve_at[1])) ?></td>
+                    </tr>
+                    </tbody>
+                </table>
+          </div>
+          <?php } ?>
   </div>
 
   <!-- Modal footer -->
-  <div class="modal-footer">
+  <div class="modal-footer"> 
       <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="cancel_button">Close</button>
       <button type="button" class="btn btn-info edit_button">Edit</button>
       <button type="submit" class="btn btn-success save_button" hidden>Save changes</button>

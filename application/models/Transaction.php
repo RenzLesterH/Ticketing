@@ -20,8 +20,8 @@ class Transaction extends CI_Model
 
         if ($this->session->userdata('user_level') === "1") {
             
-            $transaction_status = "transaction.received_at";
-            $where_query = "transaction.progress = 'On Going' OR transaction.progress = 'Pending'";
+            $transaction_status = "transaction.received_at, transaction.prepared_at, transaction.verified_at, transaction.approve_at";
+            $where_query = "transaction.progress = 'On Going' OR transaction.progress = 'Pending' OR transaction.progress = 'Approved'";
 
         }else if ($this->session->userdata('user_level') === "2") {
 
@@ -65,7 +65,10 @@ class Transaction extends CI_Model
                 transaction.transaction_code,
                 transaction.progress,
                 transaction.has_requirements,
-                transaction.received_at
+                transaction.received_at,
+                transaction.prepared_at, 
+                transaction.verified_at, 
+                transaction.approve_at
             FROM
                 client
             LEFT JOIN
@@ -151,6 +154,7 @@ class Transaction extends CI_Model
     /* This function handles the updating of products in the database and returns the product id back. */
     function update_client_transaction_by_id($transaction_data)
     {
+        $this->delete_previous_approved_transaction($this->security->xss_clean($transaction_data['id']));
         $has_requirements = 0;
         $progress = "Pending";
         if(isset($transaction_data['requirements'])){
@@ -191,6 +195,33 @@ class Transaction extends CI_Model
         $this->db->query($query, $values);
         $code_no = $this->db->query('SELECT transaction_code AS `transaction_code` FROM transaction WHERE client_id='.$transaction_data["id"].'')->row(); 
         return 'Client transaction no. '. $code_no->transaction_code .' of '.$transaction_data['firstname']." ".$transaction_data['middlename']." ".$transaction_data['lastname']. ' is updated successfully!';
+    } 
+
+    function delete_previous_approved_transaction($id){
+        $current_progress = $this->get_client_transaction_by_id($id);
+        if($current_progress[0]['progress'] === "Approved"){
+             $query = 
+            "UPDATE 
+                client
+             INNER JOIN
+                transaction 
+             ON 
+                client.id = transaction.client_id 
+             SET
+                transaction.prepared_at = ?,
+                transaction.verified_at = ?,
+                transaction.approve_at = ?
+             WHERE
+                client.id = ?";
+
+            $values = array(
+                NULL,
+                NULL,
+                NULL,
+                $id,
+            );
+            $this->db->query($query, $values);
+        }
     }
 
     function update_client_transaction_progress_by_id($transaction_data)
