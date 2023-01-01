@@ -80,7 +80,7 @@
                                 <button type="button" class="btn btn-outline-info edit_transaction" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#view_client_modal">
                                     View more
                                 </button>
-                                <button type="button" class="btn btn-outline-primary print_transaction" id="<?= $client_transaction['id'] ?>">
+                                <button type="button" class="btn btn-outline-primary print_transaction print_trans_<?= $client_transaction['id'] ?>" id="<?= $client_transaction['id'] ?>">
                                 <?php if ($client_transaction['progress'] === "Approved" && $this->session->userdata('user_level') === "1"){ ?>
                                     Re-Print
                                 <?php }else{ ?>
@@ -228,10 +228,18 @@
             
             $(document).on('click', 'button.print_transaction', function() {
                 let client_transaction_id = $(this).attr('id');
-                $.get("print_transaction/" + client_transaction_id, function(res) {
-                    window.open("http://localhost/Ticketing/print_transaction/"+client_transaction_id);
-                });
+                let prev_text = $(".print_trans_"+client_transaction_id).text();
+                $.ajax({
+                    url:"print_transaction/" + client_transaction_id,
+                    type:'get',
+                    beforeSend: function(){
+                        $(".print_trans_"+client_transaction_id).html('<i class="fa fa-spinner fa-spin" title="button-loader"></i> Processing');
+                    },
+                    success:function(response){
+                        $(".print_trans_"+client_transaction_id).html(prev_text);
+                        window.open("http://localhost/Ticketing/print_transaction/"+client_transaction_id);
+                    }
+                }); 
             });
-
         });
     </script>
