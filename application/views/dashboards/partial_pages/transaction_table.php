@@ -86,7 +86,7 @@
                                 <?php }else{ ?>
                                     Print
                                 <?php } ?>
-                                </button>
+                                </button> 
                             <?php }else if ($this->session->userdata('user_level') === "2"){ ?>
                                 <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
                                     Prepare now

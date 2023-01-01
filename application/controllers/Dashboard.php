@@ -50,11 +50,14 @@ class Dashboard extends CI_Controller {
     public function load_partial_pages($page)
 	{   
         // 1 = As list of Appointment
-        // 2 = As add client transaction form 
-        if($page == "1"){
+        // 2 = As add client transaction form
+        if($page == "0"){
+            $data["client_transactions"] = $this->Transaction->view_all_transaction();
+            $this->load->view("dashboards/partial_pages/all_transaction_table", $data);
+        }else if($page == "1"){
             $data["client_transactions"] = $this->Transaction->get_all_transaction();
             $this->load->view("dashboards/partial_pages/transaction_table", $data);
-        }elseif ($page == "2") {
+        }else if ($page == "2") {
             $this->load->view("dashboards/partial_pages/add_form"); 
         }
           		

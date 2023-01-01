@@ -14,6 +14,22 @@ class Transaction extends CI_Model
         return $this->db->query($query, $progress)->num_rows(); 
     }
 
+    function view_all_transaction()
+    {
+        $view_all_transaction = 
+        "SELECT 
+            client.*,
+            transaction.transaction_code,
+            transaction.transaction,
+            transaction.progress
+        FROM
+            client
+        LEFT JOIN
+            transaction ON client.id = transaction.client_id";
+
+        return $this->db->query($view_all_transaction)->result_array();
+    }
+
     /* This function returns all the client transaction detail from the database. */
     function get_all_transaction()
     {

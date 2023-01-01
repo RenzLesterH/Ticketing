@@ -95,10 +95,15 @@
 							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 						</a>
 					</li>
-
+					<li class="sidebar-item navigation_link" id="all_transaction_link">
+						<a class="sidebar-link" href="load/0" id="all_list_transaction">
+							<i class="align-middle" data-feather="list"></i> <span class="align-middle">View All
+								Transactions</span>
+						</a>
+					</li>
 					<li class="sidebar-item navigation_link" id="list_transaction_link">
 						<a class="sidebar-link" href="load/1" id="list_transaction">
-							<i class="align-middle" data-feather="list"></i> <span class="align-middle">List of
+							<i class="align-middle" data-feather="search"></i> <span class="align-middle">Assess
 								Transactions</span>
 						</a>
 					</li>
