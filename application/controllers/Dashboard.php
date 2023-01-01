@@ -21,16 +21,45 @@ class Dashboard extends CI_Controller {
             $this->load->view('index');   
         } 
         else {
+            /* Analytics for trasaction */
             $total_recieved = $this->Transaction->count_analytics("On Going");
             $total_pending = $this->Transaction->count_analytics("Pending"); 
             $total_prepared = $this->Transaction->count_analytics("Prepared");
             $total_verified = $this->Transaction->count_analytics("Verified");
             $total_successfull = $this->Transaction->count_analytics("Approved");
+
+            /* Analytics for monthly trasaction */
+            $january = $this->Transaction->count_transaction_by_months(1);
+            $february = $this->Transaction->count_transaction_by_months(2);
+            $march = $this->Transaction->count_transaction_by_months(3);
+            $april = $this->Transaction->count_transaction_by_months(4);
+            $may = $this->Transaction->count_transaction_by_months(5);
+            $june = $this->Transaction->count_transaction_by_months(6);
+            $july = $this->Transaction->count_transaction_by_months(7);
+            $august = $this->Transaction->count_transaction_by_months(8);
+            $september = $this->Transaction->count_transaction_by_months(9);
+            $october = $this->Transaction->count_transaction_by_months(10);
+            $november = $this->Transaction->count_transaction_by_months(11);
+            $december = $this->Transaction->count_transaction_by_months(12);
+
             $this->load->view('dashboards/dashboard', array("total_recieved" => $total_recieved, 
                                                             "total_prepared" => $total_prepared, 
                                                             "total_verified" => $total_verified,
                                                             "total_successfull" => $total_successfull,
-                                                            "total_pending" => $total_pending
+                                                            "total_pending" => $total_pending,
+
+                                                            "january" => $january,
+                                                            "february" => $february, 
+                                                            "march" => $march, 
+                                                            "april" => $april,
+                                                            "may" => $may,
+                                                            "june" => $june,
+                                                            "july" => $july,
+                                                            "august" => $august,
+                                                            "september" => $september, 
+                                                            "october" => $october, 
+                                                            "november" => $november,
+                                                            "december" => $december
                                                         ));
         }     		
 	}

@@ -14,6 +14,19 @@ class Transaction extends CI_Model
         return $this->db->query($query, $progress)->num_rows(); 
     }
 
+    function count_transaction_by_months($month)
+    {
+        $query = 
+            "SELECT 
+                *
+            FROM
+                transaction
+            WHERE
+                MONTH(created_at) = ?;";
+                
+        return $this->db->query($query, $month)->num_rows(); 
+    }
+
     function view_all_transaction()
     {
         $view_all_transaction = 
