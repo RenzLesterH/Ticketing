@@ -55,6 +55,7 @@ $route['logout'] = 'appointment/logout';
 $route['dashboard'] = 'dashboard';
 $route['add_transaction/validate'] = 'dashboard/add_transaction_process';
 $route['view_client_transaction/(:any)'] = 'dashboard/view_client_transaction/$1';
+$route['view_transaction/(:any)'] = 'dashboard/view_transaction/$1';
 $route['load/(:any)'] = 'dashboard/load_partial_pages/$1';
 $route['update_transaction/validate'] = 'dashboard/update_transaction_process';
 $route['client_transaction/validate'] = 'dashboard/update_client_transaction_progress';

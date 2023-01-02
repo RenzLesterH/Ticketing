@@ -10,6 +10,7 @@
                         <th>Transaction No.</th>
                         <th>Transaction Type</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,11 @@
                                 <span class="badge bg-info"><?= $client_transaction['progress'] ?></span>
                             <?php } ?>
                         </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-info view_transaction" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#view_transaction_modal">
+                                    View Transaction
+                            </button>
+                        </td>
                     </tr>
                     <?php } ?> 
                 </tbody>
@@ -44,34 +50,22 @@
     </div>
 
     <!-- The Modal View client transaction -->
-    <div class="modal" id="view_client_modal" data-bs-backdrop="static">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" id="view_client_transaction_form">
+    <div class="modal" id="view_transaction_modal" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" id="view_transaction">
                 <!-- Load Form -->
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="confirm_edit_transaction" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h4 class="modal-title" id="staticBackdropLabel">Confirm Changes</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-warning mb-0" role="alert">
-                        <h4 class="alert-heading"><i class="fa-solid fa-circle-exclamation"></i> Save Changes?</h4>
-                        <p id="confirm_message">
-                            <!-- Confirmation Message Here -->
-                        </p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success update_transaction">Update Transaction</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+
+<script>
+        $(document).ready(function() {
+            $(document).on('click', 'button.view_transaction', function() {
+                let client_transaction_id = $(this).attr('id');
+                $.get("view_transaction/" + client_transaction_id, function(res) {
+                    $('#view_transaction').html(res);
+                });
+            });
+        });
+    </script>
