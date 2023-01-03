@@ -50,6 +50,7 @@
                   <option selected><?= $client_transaction[0]['transaction'] ?></option>
               </select>
           </div>
+          <?php if($this->session->userdata('user_level') === "1"){ ?>
           <div class="col-7 mb-2">
               <label class="form-check">
                 <?php
@@ -62,6 +63,7 @@
                       Check if client has all the requirements.
                   </span>
           </div>
+          <?php } ?>
           <?php if($client_transaction[0]['progress'] === "Approved"){
                 $prepared_at = json_decode($client_transaction[0]['prepared_at']);
                 $verified_at = json_decode($client_transaction[0]['verified_at']);

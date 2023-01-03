@@ -186,10 +186,16 @@ class Transaction extends CI_Model
         $this->delete_previous_approved_transaction($this->security->xss_clean($transaction_data['id']));
         $has_requirements = 0;
         $progress = "Pending";
-        if(isset($transaction_data['requirements'])){
-            $progress = "On Going";
+        if($this->session->userdata('user_level') === "4"){
+            $progress = "Verified";
             $has_requirements = 1;
+        }else{ 
+            if(isset($transaction_data['requirements'])){
+                $progress = "On Going";
+                $has_requirements = 1;
+            }
         }
+        
         $query = 
             "UPDATE 
                 client

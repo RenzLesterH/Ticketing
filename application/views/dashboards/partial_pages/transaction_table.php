@@ -76,17 +76,21 @@
                             <td><?= date("F j, Y", strtotime($transaction_status_at[1])); ?></td>
 
                             <td>
-                            <?php if ($this->session->userdata('user_level') === "1") { ?>  
+                            <?php if ($this->session->userdata('user_level') === "1" || $this->session->userdata('user_level') === "4") { ?>  
                                 <button type="button" class="btn btn-outline-info edit_transaction" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#view_client_modal">
                                     View more
                                 </button>
+
+                                <?php if ($this->session->userdata('user_level') === "1") { ?>  
                                 <button type="button" class="btn btn-outline-primary print_transaction print_trans_<?= $client_transaction['id'] ?>" id="<?= $client_transaction['id'] ?>">
                                 <?php if ($client_transaction['progress'] === "Approved" && $this->session->userdata('user_level') === "1"){ ?>
                                     Re-Print
                                 <?php }else{ ?>
                                     Print
                                 <?php } ?>
-                                </button> 
+                                </button>
+                                <?php } ?>
+
                             <?php }else if ($this->session->userdata('user_level') === "2"){ ?>
                                 <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
                                     Prepare now
@@ -95,7 +99,9 @@
                                 <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
                                     Verify now
                                 </button>
-                            <?php }else if ($this->session->userdata('user_level') === "4"){ ?>
+                            <?php }?>
+
+                            <?php if ($this->session->userdata('user_level') === "4"){ ?>
                                 <button type="button" class="btn btn-outline-info client_form_transaction_button" id="<?= $client_transaction['id'] ?>" data-bs-toggle="modal" data-bs-target="#<?=$action_form_modal?>">
                                     Approve now
                                 </button>
@@ -238,7 +244,11 @@
                     success:function(response){
                         $(".print_trans_"+client_transaction_id).html(prev_text);
                         window.open("http://localhost/Ticketing/print_transaction/"+client_transaction_id);
-                    }
+                    },
+                    error: function() {
+                        $(".print_trans_"+client_transaction_id).html(prev_text); 
+                        alert("Something went wrong. Please Refresh the page.");  
+                    }  
                 }); 
             });
         });

@@ -3,7 +3,7 @@
 
     <div class="card flex-fill">
         <div class="card-body p-4 border">
-            <table id="transcation_table" class="table table-striped" style="width:100%">
+            <table id="all_transcation_table" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -61,6 +61,8 @@
 
 <script>
         $(document).ready(function() {
+            $('#all_transcation_table').DataTable(); 
+
             $(document).on('click', 'button.view_transaction', function() {
                 let client_transaction_id = $(this).attr('id');
                 $.get("view_transaction/" + client_transaction_id, function(res) {
